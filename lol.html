@@ -55,6 +55,7 @@
   }
 
   input[type="text"],
+  input[type="time"],
   textarea {
     width: 100%;
     padding: 10px;
@@ -66,6 +67,7 @@
   }
 
   input[type="text"]:focus,
+  input[type="time"]:focus,
   textarea:focus {
     border-color: #7b1fa2;
     box-shadow: 0 0 5px rgba(123, 31, 162, 0.3);
@@ -156,17 +158,22 @@
     <form id="inviteForm">
         <div class="form-group">
             <label for="name">IGN:</label>
-            <input type="text" id="name" name="Name" placeholder="RIOT#ID"  pattern="^.+#.+$" title="Format must include a # symbol, e.g., Name#ID" value="">
+            <input type="text" id="name" name="Name" placeholder="RIOT#ID"  pattern="^.+#.+$" title="Format must include a # symbol, e.g., Name#ID" value="" required>
         </div>
 
         <div class="form-group">
             <label for="resched">If there’s a conflict, enter your preferred date 🙂:</label>
-            <input type="text" id="resched" name="RescheduleDate" class="datepicker">
+            <input type="text" id="resched" name="RescheduleDate" class="datepicker" required>
+        </div>
+
+        <div class="form-group">
+            <label for="time">Preferred Time 🕒:</label>
+            <input type="time" id="time" name="RescheduleTime" required>
         </div>
 
         <div class="form-group">
             <label for="feedback">Your Feedback:</label>
-            <textarea id="feedback" name="Feedback" rows="3" placeholder="Write your feedback here 💬"></textarea>
+            <textarea id="feedback" name="Feedback" rows="3" placeholder="Write your feedback here 💬" required></textarea>
         </div>
 
         <div class="buttons">
@@ -191,15 +198,34 @@
         }).datepicker("setDate", new Date()); 
     })();
 
+    function formatTime12Hour(time24) {
+      let [hours, minutes] = time24.split(':');
+      hours = parseInt(hours, 10);
+      const ampm = hours >= 12 ? 'PM' : 'AM';
+      hours = hours % 12 || 12; // convert 0 -> 12
+      return `${hours}:${minutes} ${ampm}`;
+    }
+
+    document.getElementById('time').value = new Date().toTimeString().slice(0,5);
+
     function sendEmail() {
         const name = document.getElementById("name").value;
         const resched = document.getElementById("resched").value;
         const feedback = document.getElementById("feedback").value;
+        const time24 = document.getElementById("time").value;  
+        const time12 = formatTime12Hour(time24);              
+        const form = document.getElementById('inviteForm');
+
+        if (!form.checkValidity()) {
+            form.reportValidity(); 
+            return;
+        }
 
         const templateParams = {
         Name: name,
-        RescheduleDate: resched, 
-        Feedback: feedback
+        Date: resched, 
+        Time: time12,
+        Feedback: feedback,
     };
 
     emailjs.send("service_3k1euok", "template_r47xajl", templateParams)
