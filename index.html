@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Choose Your Invitation 💌</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background: url("test3.webp") no-repeat center center fixed; 
+      background-size: cover; 
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      text-align: center;
+    }
+
+    h1 {
+      margin-bottom: 30px;
+    }
+
+    .choices {
+      display: flex;
+      gap: 30px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 40px;
+      border-radius: 15px;
+      width: 200px;
+      text-align: center;
+      cursor: pointer;
+      transition: 0.3s;
+      text-decoration: none;
+      color: white;
+      font-size: 18px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    .card:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-5px);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>👋😄 What would you like to do?</h1>
+    <div class="choices">
+      <a href="coffee.html" class="card">☕ Coffee & Talk</a>
+      <a href="lol.html" class="card">🎮 Play League of Legends</a>
+    </div>
+  </div>
+</body>
+</html>
