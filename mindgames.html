@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Letter Matching Game with Side Image Reveal</title>
+<title>Memory Game</title>
 <style>
 body {
   font-family: Arial, sans-serif;
@@ -140,7 +140,7 @@ p#message {
 <body>
 
 <div class="game-container">
-  <h1>Letter Matching Game</h1>
+  <h1>Memory Game</h1>
   <div id="score">Score: 0</div>
   <div class="grid" id="grid"></div>
   <p id="message"></p>
@@ -172,7 +172,7 @@ let revealLevel = 0; // 0 to 5
 
 // Load the image
 const img = new Image();
-img.src = 'test.jpg'; // your local image
+img.src = 'anime.jpg'; // your local image
 img.onload = () => {
   drawCanvas();
 };
