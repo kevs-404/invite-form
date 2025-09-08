@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Letter Matching Game with Side Image Reveal</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    height: 100vh;
+    margin: 0;
+  }
+
+  /* Left: game takes flex 1 */
+  .game-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* center cards horizontally */
+    justify-content: center; /* center content vertically */
+    padding: 20px;
+    overflow-y: auto;
+    border-right: 2px solid #ccc;
+  }
+
+  h1 {
+    margin-bottom: 20px;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(4, 80px); /* slightly larger cards */
+    gap: 15px;
+    margin-bottom: 20px;
+  }
+
+  .card {
+    width: 80px;
+    height: 80px;
+    background-color: #333;
+    color: #fff;
+    font-size: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 8px;
+    user-select: none;
+    transition: 0.3s;
+  }
+
+  .card.revealed {
+    background-color: #4caf50;
+  }
+
+  .card.matched {
+    background-color: #2196f3;
+    cursor: default;
+  }
+
+  #score {
+    font-size: 22px;
+    margin-bottom: 10px;
+  }
+
+  /* Right: image container */
+  .image-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background-color: #f9f9f9;
+  }
+
+  canvas {
+    border-radius: 12px;
+    width: 350px;   /* adjusted width */
+    height: 350px;  /* adjusted height */
+    object-fit: cover;
+  }
+
+  p#message {
+    margin-top: 10px;
+    font-size: 18px;
+    color: green;
+  }
+</style>
+</head>
+<body>
+
+<div class="game-container">
+  <h1>Letter Matching Game</h1>
+  <div id="score">Score: 0</div>
+  <div class="grid" id="grid"></div>
+  <p id="message"></p>
+</div>
+
+<div class="image-container">
+  <canvas id="revealCanvas" width="300" height="300"></canvas>
+  <p>Image Reveal</p>
+</div>
+
+<script>
+// Letters and pairs
+const letters = ['A','B','C','D'];
+const pairLetters = letters.concat(letters);
+const shuffled = pairLetters.sort(() => Math.random() - 0.5);
+
+const grid = document.getElementById('grid');
+const message = document.getElementById('message');
+const scoreEl = document.getElementById('score');
+const canvas = document.getElementById('revealCanvas');
+const ctx = canvas.getContext('2d');
+
+let firstCard = null;
+let secondCard = null;
+let lockBoard = false;
+let matches = 0;
+let score = 0;
+let revealLevel = 0; // 0 to 5
+
+// Load the image
+const img = new Image();
+img.src = 'test.jpg'; // your local image
+img.onload = () => {
+  drawCanvas();
+};
+
+// Create cards
+shuffled.forEach((letter, index) => {
+  const card = document.createElement('div');
+  card.classList.add('card');
+  card.dataset.letter = letter;
+  card.dataset.index = index;
+  card.textContent = '';
+  grid.appendChild(card);
+});
+
+// Card click handler
+grid.addEventListener('click', e => {
+  const card = e.target;
+  if (!card.classList.contains('card') || card.classList.contains('revealed') || lockBoard) return;
+
+  card.classList.add('revealed');
+  card.textContent = card.dataset.letter;
+
+  if (!firstCard) {
+    firstCard = card;
+  } else {
+    secondCard = card;
+    lockBoard = true;
+
+    if (firstCard.dataset.letter === secondCard.dataset.letter) {
+      firstCard.classList.add('matched');
+      secondCard.classList.add('matched');
+      revealCanvasImage(); // reveal part of image
+      score += 10;
+      scoreEl.textContent = `Score: ${score}`;
+      resetTurn();
+      matches += 1;
+      if (matches === letters.length) {
+        message.textContent = `🎉 You matched all 4 pairs! Total Score: ${score}`;
+      }
+    } else {
+      setTimeout(() => {
+        firstCard.classList.remove('revealed');
+        secondCard.classList.remove('revealed');
+        firstCard.textContent = '';
+        secondCard.textContent = '';
+        resetTurn();
+      }, 1000);
+    }
+  }
+});
+
+function resetTurn() {
+  [firstCard, secondCard] = [null, null];
+  lockBoard = false;
+}
+
+// Gradually reveal the image
+function revealCanvasImage() {
+  revealLevel = Math.min(revealLevel + 1, letters.length); // max = 4 now
+  drawCanvas();
+}
+
+// Draw image on canvas with current blur / opacity
+function drawCanvas() {
+  // Calculate blur based on number of letters matched
+  const maxBlur = 10;        // starting blur
+  const steps = letters.length; // 4 steps
+  const blur = maxBlur - (revealLevel * (maxBlur / steps)); // decrease blur each step
+  const opacity = 0.2 + (revealLevel * (0.8 / steps));     // increase opacity each step
+
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  ctx.filter = `blur(${blur}px)`;
+  ctx.globalAlpha = opacity;
+  ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+  ctx.globalAlpha = 1;
+}
+</script>
+
+</body>
+</html>
