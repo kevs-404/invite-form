@@ -5,88 +5,136 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Letter Matching Game with Side Image Reveal</title>
 <style>
+body {
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: row; /* side by side on desktop */
+  height: 100vh;
+  margin: 0;
+}
+
+/* Left: game takes flex 1 */
+.game-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  overflow-y: auto;
+  border-right: 2px solid #ccc;
+}
+
+h1 {
+  margin-bottom: 20px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 80px);
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.card {
+  width: 80px;
+  height: 80px;
+  background-color: #333;
+  color: #fff;
+  font-size: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 8px;
+  user-select: none;
+  transition: 0.3s;
+}
+
+.card.revealed {
+  background-color: #4caf50;
+}
+
+.card.matched {
+  background-color: #2196f3;
+  cursor: default;
+}
+
+#score {
+  font-size: 22px;
+  margin-bottom: 10px;
+}
+
+/* Right: image container */
+.image-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background-color: #f9f9f9;
+}
+
+canvas {
+  border-radius: 12px;
+  width: 350px;
+  height: 350px;
+  object-fit: cover;
+}
+
+p#message {
+  margin-top: 10px;
+  font-size: 18px;
+  color: green;
+}
+
+/* ====== RESPONSIVE ====== */
+@media (max-width: 768px) {
   body {
-    font-family: Arial, sans-serif;
-    display: flex;
-    height: 100vh;
-    margin: 0;
+    flex-direction: column; /* stack on mobile */
+    height: auto;
   }
 
-  /* Left: game takes flex 1 */
   .game-container {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* center cards horizontally */
-    justify-content: center; /* center content vertically */
-    padding: 20px;
-    overflow-y: auto;
-    border-right: 2px solid #ccc;
-  }
-
-  h1 {
-    margin-bottom: 20px;
+    border-right: none;
+    border-bottom: 2px solid #ccc;
   }
 
   .grid {
-    display: grid;
-    grid-template-columns: repeat(4, 80px); /* slightly larger cards */
-    gap: 15px;
-    margin-bottom: 20px;
+    grid-template-columns: repeat(3, 70px); /* smaller cards on mobile */
+    gap: 10px;
   }
 
   .card {
-    width: 80px;
-    height: 80px;
-    background-color: #333;
-    color: #fff;
-    font-size: 36px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    border-radius: 8px;
-    user-select: none;
-    transition: 0.3s;
-  }
-
-  .card.revealed {
-    background-color: #4caf50;
-  }
-
-  .card.matched {
-    background-color: #2196f3;
-    cursor: default;
-  }
-
-  #score {
-    font-size: 22px;
-    margin-bottom: 10px;
-  }
-
-  /* Right: image container */
-  .image-container {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    background-color: #f9f9f9;
+    width: 70px;
+    height: 70px;
+    font-size: 28px;
   }
 
   canvas {
-    border-radius: 12px;
-    width: 350px;   /* adjusted width */
-    height: 350px;  /* adjusted height */
-    object-fit: cover;
+    width: 300px;
+    height: 300px;
+  }
+}
+
+@media (max-width: 480px) {
+  .grid {
+    grid-template-columns: repeat(2, 60px); /* tiny screens */
+    gap: 8px;
   }
 
-  p#message {
-    margin-top: 10px;
-    font-size: 18px;
-    color: green;
+  .card {
+    width: 60px;
+    height: 60px;
+    font-size: 24px;
   }
+
+  canvas {
+    width: 250px;
+    height: 250px;
+  }
+}
 </style>
 </head>
 <body>
