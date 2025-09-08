@@ -9,7 +9,7 @@
 body {
   font-family: Arial, sans-serif;
   display: flex;
-  flex-direction: row; /* side by side on desktop */
+  flex-direction: row;
   height: 100vh;
   margin: 0;
 }
@@ -23,7 +23,6 @@ body {
   justify-content: center;
   padding: 20px;
   overflow-y: auto;
-  /* border-right: 2px solid #ccc; */
 }
 
 h1 {
@@ -93,16 +92,12 @@ p#message {
 /* ====== RESPONSIVE ====== */
 @media (max-width: 768px) {
   body {
-    flex-direction: column; /* stack on mobile */
+    flex-direction: column;
     height: auto;
   }
 
-  .game-container {
-    border-right: none;
-  }
-
   .grid {
-    grid-template-columns: repeat(3, 70px); /* smaller cards on mobile */
+    grid-template-columns: repeat(3, 70px);
     gap: 10px;
   }
 
@@ -120,7 +115,7 @@ p#message {
 
 @media (max-width: 480px) {
   .grid {
-    grid-template-columns: repeat(2, 60px); /* tiny screens */
+    grid-template-columns: repeat(2, 60px);
     gap: 8px;
   }
 
@@ -157,6 +152,9 @@ const letters = ['A','B','C','D'];
 const pairLetters = letters.concat(letters);
 const shuffled = pairLetters.sort(() => Math.random() - 0.5);
 
+// Cards array hidden in JS
+const cardsArray = shuffled.map(letter => ({ letter, revealed: false }));
+
 const grid = document.getElementById('grid');
 const message = document.getElementById('message');
 const scoreEl = document.getElementById('score');
@@ -168,7 +166,7 @@ let secondCard = null;
 let lockBoard = false;
 let matches = 0;
 let score = 0;
-let revealLevel = 0; // 0 to 5
+let revealLevel = 0;
 
 // Load the image
 const img = new Image();
@@ -177,47 +175,55 @@ img.onload = () => {
   drawCanvas();
 };
 
-// Create cards
-shuffled.forEach((letter, index) => {
-  const card = document.createElement('div');
-  card.classList.add('card');
-  card.dataset.letter = letter;
-  card.dataset.index = index;
-  card.textContent = '';
-  grid.appendChild(card);
+// Create card elements (without exposing letters)
+cardsArray.forEach((_, index) => {
+  const cardEl = document.createElement('div');
+  cardEl.classList.add('card');
+  cardEl.dataset.index = index; // only index, not letter
+  cardEl.textContent = '';
+  grid.appendChild(cardEl);
 });
 
-// Card click handler
+// Click handler
 grid.addEventListener('click', e => {
-  const card = e.target;
-  if (!card.classList.contains('card') || card.classList.contains('revealed') || lockBoard) return;
+  const cardEl = e.target;
+  if (!cardEl.classList.contains('card') || lockBoard) return;
 
-  card.classList.add('revealed');
-  card.textContent = card.dataset.letter;
+  const index = cardEl.dataset.index;
+  const card = cardsArray[index];
+  if (card.revealed) return;
+
+  cardEl.classList.add('revealed');
+  cardEl.textContent = card.letter;
+  card.revealed = true;
 
   if (!firstCard) {
-    firstCard = card;
+    firstCard = { card, el: cardEl };
   } else {
-    secondCard = card;
+    secondCard = { card, el: cardEl };
     lockBoard = true;
 
-    if (firstCard.dataset.letter === secondCard.dataset.letter) {
-      firstCard.classList.add('matched');
-      secondCard.classList.add('matched');
-      revealCanvasImage(); // reveal part of image
+    if (firstCard.card.letter === secondCard.card.letter) {
+      firstCard.el.classList.add('matched');
+      secondCard.el.classList.add('matched');
+      revealCanvasImage();
       score += 10;
       scoreEl.textContent = `Score: ${score}`;
-      resetTurn();
       matches += 1;
       if (matches === letters.length) {
         message.textContent = `🎉 You matched all 4 pairs! Total Score: ${score}`;
       }
+      resetTurn();
     } else {
       setTimeout(() => {
-        firstCard.classList.remove('revealed');
-        secondCard.classList.remove('revealed');
-        firstCard.textContent = '';
-        secondCard.textContent = '';
+        firstCard.el.classList.remove('revealed');
+        firstCard.el.textContent = '';
+        firstCard.card.revealed = false;
+
+        secondCard.el.classList.remove('revealed');
+        secondCard.el.textContent = '';
+        secondCard.card.revealed = false;
+
         resetTurn();
       }, 1000);
     }
@@ -231,19 +237,18 @@ function resetTurn() {
 
 // Gradually reveal the image
 function revealCanvasImage() {
-  revealLevel = Math.min(revealLevel + 1, letters.length); // max = 4 now
+  revealLevel = Math.min(revealLevel + 1, letters.length);
   drawCanvas();
 }
 
-// Draw image on canvas with current blur / opacity
+// Draw image with blur and opacity based on progress
 function drawCanvas() {
-  // Calculate blur based on number of letters matched
-  const maxBlur = 10;        // starting blur
-  const steps = letters.length; // 4 steps
-  const blur = maxBlur - (revealLevel * (maxBlur / steps)); // decrease blur each step
-  const opacity = 0.2 + (revealLevel * (0.8 / steps));     // increase opacity each step
+  const maxBlur = 10;
+  const steps = letters.length;
+  const blur = maxBlur - (revealLevel * (maxBlur / steps));
+  const opacity = 0.2 + (revealLevel * (0.8 / steps));
 
-  ctx.clearRect(0,0,canvas.width,canvas.height);
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.filter = `blur(${blur}px)`;
   ctx.globalAlpha = opacity;
   ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
