@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="../assets/programmerist.png" type="image/x-icon" />
+    <title>Memory Game 🌶️</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: row;
+        height: 100vh;
+        margin: 0;
+      }
+
+      /* memory game left side */
+      .game-container {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        overflow-y: auto;
+      }
+
+      h1 {
+        margin-bottom: 20px;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(4, 80px);
+        gap: 15px;
+        margin-bottom: 20px;
+      }
+
+      .card {
+        width: 80px;
+        height: 80px;
+        background-color: #333;
+        color: #fff;
+        font-size: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        border-radius: 8px;
+        user-select: none;
+        transition: 0.3s;
+      }
+
+      .card.revealed {
+        background-color: #4caf50;
+      }
+
+      .card.matched {
+        background-color: #2196f3;
+        cursor: default;
+      }
+
+      #score {
+        font-size: 22px;
+        margin-bottom: 10px;
+      }
+
+      /* result of the image */
+      .image-container {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        background-color: transparent;
+      }
+
+      canvas {
+        border-radius: 12px;
+        width: 350px;
+        height: 350px;
+        object-fit: cover;
+      }
+
+      p#message {
+        margin-top: 10px;
+        font-size: 18px;
+        color: green;
+      }
+
+      /* ====== RESPONSIVE ====== */
+      @media (max-width: 768px) {
+        body {
+          flex-direction: column;
+          height: auto;
+        }
+
+        .grid {
+          grid-template-columns: repeat(3, 70px);
+          gap: 10px;
+        }
+
+        .card {
+          width: 70px;
+          height: 70px;
+          font-size: 28px;
+        }
+
+        canvas {
+          width: 300px;
+          height: 300px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .grid {
+          grid-template-columns: repeat(2, 60px);
+          gap: 8px;
+        }
+
+        .card {
+          width: 60px;
+          height: 60px;
+          font-size: 24px;
+        }
+
+        canvas {
+          width: 250px;
+          height: 250px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="game-container">
+      <h1>Memory Game</h1>
+      <div id="score">Score: 0</div>
+      <div class="grid" id="grid"></div>
+      <p id="message"></p>
+    </div>
+
+    <div class="image-container">
+      <canvas id="revealCanvas" width="300" height="300"></canvas>
+      <p>Image Reveal</p>
+    </div>
+
+    <script>
+      // declared letters
+      const letters = ["A", "B", "C", "D"];
+      const pairLetters = letters.concat(letters);
+      const shuffled = pairLetters.sort(() => Math.random() - 0.5);
+
+      // cards value hidden in js to avoid cheating
+      const cardsArray = shuffled.map((letter) => ({
+        letter,
+        revealed: false,
+      }));
+
+      const grid = document.getElementById("grid");
+      const message = document.getElementById("message");
+      const scoreEl = document.getElementById("score");
+      const canvas = document.getElementById("revealCanvas");
+      const ctx = canvas.getContext("2d");
+
+      let firstCard = null;
+      let secondCard = null;
+      let lockBoard = false;
+      let matches = 0;
+      let score = 0;
+      let revealLevel = 0;
+
+      // Load the image
+      const img = new Image();
+      img.src = "../assets/anime.jpg"; 
+      img.onload = () => {
+        drawCanvas();
+      };
+
+      // Create card elements (without exposing letters)
+      cardsArray.forEach((_, index) => {
+        const cardEl = document.createElement("div");
+        cardEl.classList.add("card");
+        cardEl.dataset.index = index; // only index, not letter
+        cardEl.textContent = "";
+        grid.appendChild(cardEl);
+      });
+
+      // Click handler
+      grid.addEventListener("click", (e) => {
+        const cardEl = e.target;
+        if (!cardEl.classList.contains("card") || lockBoard) return;
+
+        const index = cardEl.dataset.index;
+        const card = cardsArray[index];
+        if (card.revealed) return;
+
+        cardEl.classList.add("revealed");
+        cardEl.textContent = card.letter;
+        card.revealed = true;
+
+        if (!firstCard) {
+          firstCard = { card, el: cardEl };
+        } else {
+          secondCard = { card, el: cardEl };
+          lockBoard = true;
+
+          if (firstCard.card.letter === secondCard.card.letter) {
+            firstCard.el.classList.add("matched");
+            secondCard.el.classList.add("matched");
+            revealCanvasImage();
+            score += 10;
+            scoreEl.textContent = `Score: ${score}`;
+            matches += 1;
+            if (matches === letters.length) {
+              message.textContent = `🎉 You matched all 4 pairs! Total Score: ${score}`;
+            }
+            resetTurn();
+          } else {
+            setTimeout(() => {
+              firstCard.el.classList.remove("revealed");
+              firstCard.el.textContent = "";
+              firstCard.card.revealed = false;
+
+              secondCard.el.classList.remove("revealed");
+              secondCard.el.textContent = "";
+              secondCard.card.revealed = false;
+
+              resetTurn();
+            }, 1000);
+          }
+        }
+      });
+
+      function resetTurn() {
+        [firstCard, secondCard] = [null, null];
+        lockBoard = false;
+      }
+
+      // reveal the image
+      function revealCanvasImage() {
+        revealLevel = Math.min(revealLevel + 1, letters.length);
+        drawCanvas();
+      }
+
+      // each correc set of pair the blur and opacity will reduce
+      function drawCanvas() {
+        const maxBlur = 10;
+        const steps = letters.length;
+        const blur = maxBlur - revealLevel * (maxBlur / steps);
+        const opacity = 0.2 + revealLevel * (0.8 / steps);
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.filter = `blur(${blur}px)`;
+        ctx.globalAlpha = opacity;
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        ctx.globalAlpha = 1;
+      }
+    </script>
+  </body>
+</html>

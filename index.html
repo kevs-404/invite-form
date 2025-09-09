@@ -1,67 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="shortcut icon" href="programmerist.png" type="image/x-icon">
-  <title>Choose Your Invitation 💌 </title>
-  <style>
-    body {
-      font-family: 'Arial', sans-serif;
-      background: url("test3.webp") no-repeat center center fixed; 
-      background-size: cover; 
-      color: white;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-    }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="assets/programmerist.png" type="image/x-icon"/>
+    <title>Choose Your Invitation 💌</title>
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+        background: url("assets/test3.webp") no-repeat center center fixed;
+        background-size: cover;
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+      }
 
-    .container {
-      text-align: center;
-    }
+      .container {
+        text-align: center;
+      }
 
-    h1 {
-      margin-bottom: 30px;
-    }
+      h1 {
+        margin-bottom: 30px;
+      }
 
-    .choices {
-      display: flex;
-      gap: 30px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
+      .choices {
+        display: flex;
+        gap: 30px;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
 
-    .card {
-      background: rgba(255, 255, 255, 0.1);
-      padding: 40px;
-      border-radius: 15px;
-      width: 200px;
-      text-align: center;
-      cursor: pointer;
-      transition: 0.3s;
-      text-decoration: none;
-      color: white;
-      font-size: 18px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-    }
+      .card {
+        background: rgba(255, 255, 255, 0.1);
+        padding: 40px;
+        border-radius: 15px;
+        width: 200px;
+        text-align: center;
+        cursor: pointer;
+        transition: 0.3s;
+        text-decoration: none;
+        color: white;
+        font-size: 18px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      }
 
-    .card:hover {
-      background: rgba(255, 255, 255, 0.2);
-      transform: translateY(-5px);
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <h1>👋😄 What would you like to do?</h1>
-    <div class="choices">
-      <a href="coffee.html" class="card">☕ Coffee & Talk</a>
-      <a href="lol.html" class="card">🎮 Play League of Legends</a>
-      <a href="mindgames.html" class="card">🌶️ Memory Game </a>
-      <a href="puzzlegames.html" class="card">🥵 Puzzle Game </a>
+      .card:hover {
+        background: rgba(255, 255, 255, 0.2);
+        transform: translateY(-5px);
+      }
+
+      .site-footer {
+        font-size: 12px;
+        color: white;
+        text-align: center;
+        margin-top: 20px;
+        padding: 15px 0;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>👋😄 What would you like to do?</h1>
+      <div class="choices">
+        <a href="invitation/coffee.html" class="card">☕ Coffee & Talk</a>
+        <a href="invitation/lol.html" class="card">🎮 Play League of Legends</a>
+        <a href="games/mindgames.html" class="card">🌶️ Memory Game </a>
+        <a href="games/puzzlegames.html" class="card">🥵 Puzzle Game </a>
+      </div>
+      <footer class="site-footer">© 2025 Kevs404 💻✨</footer>
     </div>
-  </div>
-</body>
+  </body>
 </html>
