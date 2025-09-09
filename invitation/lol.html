@@ -171,29 +171,12 @@
 
         <div class="form-group">
           <label for="name">IGN: *</label>
-          <input
-            type="text"
-            id="name"
-            name="Name"
-            placeholder="RIOT#ID"
-            pattern="^.+#.+$"
-            title="Format must include a # symbol, e.g., Name#ID"
-            value=""
-            required
-          />
+          <input type="text" id="name" name="Name" placeholder="RIOT#ID" pattern="^.+#.+$" title="Format must include a # symbol, e.g., Name#ID" value="" required/>
         </div>
 
         <div class="form-group">
-          <label for="resched"
-            >If there’s a conflict, enter your preferred date 🙂: *</label
-          >
-          <input
-            type="text"
-            id="resched"
-            name="RescheduleDate"
-            class="datepicker"
-            required
-          />
+          <label for="resched">If there’s a conflict, enter your preferred date 🙂: *</label>
+          <input type="text" id="resched" name="RescheduleDate" class="datepicker" required/>
         </div>
 
         <div class="form-group">
@@ -203,13 +186,7 @@
 
         <div class="form-group">
           <label for="feedback">Your Feedback: *</label>
-          <textarea
-            id="feedback"
-            name="Feedback"
-            rows="3"
-            placeholder="Write your feedback here 💬"
-            required
-          ></textarea>
+          <textarea id="feedback" name="Feedback" rows="3" placeholder="Write your feedback here 💬" required></textarea>
         </div>
 
         <div class="buttons">
@@ -223,6 +200,7 @@
 
     <script>
       (function () {
+        // email js PUBLIC API KEY (user)
         emailjs.init("nOKdZY6A-oXabU6FD");
 
         $(".datepicker")
@@ -247,6 +225,7 @@
         .toTimeString()
         .slice(0, 5);
 
+      // email js function
       function sendEmail() {
         const name = document.getElementById("name").value;
         const game = document.getElementById("game").value;
@@ -261,6 +240,7 @@
           return;
         }
 
+        // parameter pass to emailjs template
         const templateParams = {
           Game: game,
           Name: name,
@@ -270,9 +250,9 @@
         };
 
         emailjs
+          // email js: serviceID, templateID, templateParams
           .send("service_3k1euok", "template_r47xajl", templateParams)
-          .then(
-          () => {
+          .then(() => {
             swal({
               title: "Success 💌",
               text: "I can’t wait to play duo both with you once again! 🥺🎮",
