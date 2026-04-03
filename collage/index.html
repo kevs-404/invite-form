@@ -12,7 +12,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      height: 80vh;
       text-align: center;
       margin: 0;
       flex-direction: column;
@@ -27,9 +27,30 @@
       color: #ffaaaa;
       font-size: 1.2em;
     }
+    .spotify-player {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    width: 100%;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    }
+    .spotify-player iframe {
+      width: 100%;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
   </style>
 </head>
 <body>
+  <div class="spotify-player">
+    <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/track/7MoHtlRxZ2cN9gfKg15eBg?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+  </div>
+
+  <br>
+  <br>
+
   <h1>Bye! Stay toxic and masculine in your 30s</h1>
   <p>System permanently terminated. Cannot be reversed.</p>
 </body>
