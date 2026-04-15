@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="shortcut icon" href="../assets/programmerist.png" type="image/x-icon"/>
+<title>Bloopers/Others</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 20px;
+  }
+
+  h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+  }
+
+  .month-section {
+    margin-top: 50px;
+    margin-bottom: 50px;
+  }
+
+  .month-title {
+    font-size: 1.5em;
+    margin-bottom: 15px;
+    color: #444;
+    border-bottom: 2px solid #ccc;
+    padding-bottom: 5px;
+  }
+
+  .month-description {
+    max-width: 1200px;
+    margin: 0 auto 20px auto; /* center + spacing below */
+    color: #555;
+    line-height: 1.6;
+    font-size: 1em;
+  }
+
+  .collage {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: 15px;
+  }
+
+  .photo-container {
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+
+  .photo-container img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s;
+  }
+
+  .photo-container video {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    display: block;
+    border-radius: 10px;
+   }
+
+  .photo-container:hover {
+    transform: scale(1.05) rotate(2deg);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+    z-index: 10;
+  }
+
+  
+  .spotify-player {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    width: 100%;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .spotify-player iframe {
+    width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  }
+
+  .site-footer {
+    font-size: 12px;
+    color: black;
+    text-align: center;
+    margin-top: 20px;
+    padding: 15px 0;
+    position: static; /* default */
+    width: 100%;
+  }
+
+  .site-footer-bloopers {
+    font-size: 12px;
+    color: black;
+    text-align: center;
+    margin-top: 0px;
+    padding: 15px 0;
+    position: static; /* default */
+    width: 100%;
+  }
+
+  @media (max-width: 480px) {
+    .photo-container img {
+      height: 350px;
+      object-fit: cover;
+    }
+    .side-nav {
+      display: none;
+    }
+  }
+  .lightbox {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(15, 15, 15, 0.92);
+  justify-content: center;
+  align-items: center;
+}
+
+.lightbox-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 90%;
+  max-height: 90%;
+}
+
+.lightbox-title {
+  color: #fff;
+  font-size: 18px;
+  margin-bottom: 12px;
+  text-align: center;
+  font-weight: 600;
+  max-width: 100%;
+}
+
+.lightbox img {
+  max-width: 85vw;
+  max-height: 75vh; 
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+}
+
+.lightbox .close {
+  position: absolute;
+  top: 15px;
+  right: 25px;
+  font-size: 40px;
+  color: white;
+  cursor: pointer;
+}
+
+#goTopBtn, #goDownBtn {
+  position: fixed;
+  right: 15px;
+  z-index: 99999;
+
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: none;
+
+  background: #444;
+  color: white;
+  font-size: 18px;
+
+  cursor: pointer;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.25);
+
+  -webkit-tap-highlight-color: transparent;
+  display: none;
+}
+
+#goTopBtn {
+  bottom: 55px;
+  right: 5px;
+}
+
+#goDownBtn {
+  bottom: 5px;
+  right: 5px;
+}
+
+#goTopBtn:hover,
+#goDownBtn:hover {
+  background: #222;
+  transform: scale(1.08);
+}
+
+.side-nav {
+  position: fixed;
+  right: 5px;
+  top: 5px;
+  width: 35px;
+  background: rgba(255,255,255,0.9);
+  padding: 5px;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+  z-index: 9999;
+  font-size: 14px;
+}
+
+.side-nav .nav-title {
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.side-nav .nav-year {
+  margin-top: 5px;
+  font-weight: bold;
+  color: #666;
+}
+
+.side-nav a {
+  display: block;
+  padding: 5px;
+  cursor: pointer;
+  color: #333;
+  text-decoration: none;
+  border-radius: 6px;
+}
+
+.side-nav a:hover {
+  background: #eee;
+}
+</style>
+</head>
+<body>
+
+<h1 id="title">Bloopers/Others</h1>
+
+<div class="spotify-player">
+  <iframe src="https://open.spotify.com/embed/track/7CiURh4lnoFWviD9zT1Oit?utm_source=generator" width="100%" height="152" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+</div>
+
+<div class="month-section">
+  <div class="month-title">Jokes/Bloopers Pampa Goodvibes!</div>
+    <p class="month-description">
+      "Habang ginagawa ko to ngayun mas lalo kitang namimiss at naalala, sorry sa lahat sana kung makita mo man mo i take mo sana as positivy at goodvibes lang!"
+    </p>
+  </div>
+</div>
+
+<!-- Bloopers/Others 2024, 2025, 2026 -->
+<div class="month-section">
+  <div class="collage">
+    <div class="photo-container"><img src="../assets/collage/others (1).jpg"></div>
+    <div class="photo-container"><img src="../assets/collage/others (2).jpg"></div>
+    <div class="photo-container"><img src="../assets/collage/others (3).jpg"></div>
+    <div class="photo-container"><img src="../assets/collage/others (4).jpg"></div>
+    <div class="photo-container"><img src="../assets/collage/others (5).jpg"></div>
+    <div class="photo-container"><img src="../assets/collage/others (6).jpg"></div>
+    <div class="photo-container"><img src="../assets/collage/others (7).jpg"></div>
+    <div class="photo-container"><img src="../assets/collage/others (8).jpg"></div>
+    <div class="photo-container"><img src="../assets/collage/others (9).jpg"></div>
+    <div class="photo-container"><img src="../assets/collage/others (10).jpg"></div>
+    <div class="photo-container"><img src="../assets/collage/others (11).jpg"></div>
+    <div class="photo-container"><img src="../assets/collage/others (12).jpg"></div>
+    <div class="photo-container"><img src="../assets/collage/others (13).jpg"></div>
+    <div class="photo-container"><img src="../assets/collage/others (14).jpg"></div>
+    <div class="photo-container"><img src="../assets/collage/others (15).jpg"></div>
+    <div class="photo-container"><img src="../assets/collage/others (16).jpg"></div>
+    <div class="photo-container"><img src="../assets/collage/others (17).jpg"></div>
+    <div class="photo-container"><img src="../assets/collage/others (18).jpg"></div>
+    <div class="photo-container"><img src="../assets/collage/others (19).jpg"></div>
+    <div class="photo-container"><img src="../assets/collage/others (20).jpg"></div>
+    <div class="photo-container"><img src="../assets/collage/others (21).jpg"></div>
+    <div class="photo-container"><img src="../assets/collage/others (22).jpg"></div>
+  </div>
+</div>
+
+<div class="month-section">
+  <div class="month-title">Clipped/Videos</div>
+    <p class="month-description">
+      <!-- "Habang ginagawa ko to ngayun mas lalo kitang namimiss at naalala, sorry sa lahat sana kung makita mo man mo i take mo sana as positivy at goodvibes lang!" -->
+    </p>
+  </div>
+</div>
+
+<!-- Videos -->
+<div class="month-section">
+  <div class="collage">
+    <!-- VIDEO 1 -->
+    <div class="photo-container">
+      <video controls>
+        <source src="../assets/collage/others (1).mp4" type="video/mp4">
+      </video>
+    </div>
+
+    <!-- VIDEO 2 -->
+    <div class="photo-container">
+      <video controls>
+        <source src="../assets/collage/others (2).mp4" type="video/mp4">
+      </video>
+    </div>
+
+    <!-- VIDEO 3 -->
+    <div class="photo-container">
+      <video controls>
+        <source src="../assets/collage/others (3).mp4" type="video/mp4">
+      </video>
+    </div>
+
+    <!-- VIDEO 4 -->
+    <div class="photo-container">
+      <video controls>
+        <source src="../assets/collage/others (4).mp4" type="video/mp4">
+      </video>
+    </div>
+  </div>
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <span class="close" onclick="closeLightbox()">×</span>
+
+  <div class="lightbox-content">
+    <div class="lightbox-title" id="lightbox-title"></div>
+    <img id="lightbox-img">
+  </div>
+</div>
+
+<!-- Up button -->
+<button id="goTopBtn" onclick="goToTop()">↑</button>
+<!-- Down button -->
+<button id="goDownBtn" onclick="goToBottom()">↓</button>
+
+ <footer class="site-footer">© 2025 - 2026 Kevs404 💻✨</footer>
+
+ <script>
+  window.onload = function () {
+    const target = document.getElementById("title");
+    if (target) {
+      target.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  const goTopBtn = document.getElementById("goTopBtn");
+  const goDownBtn = document.getElementById("goDownBtn");
+
+  window.addEventListener("scroll", () => {
+    if (window.scrollY > 300) {
+      goTopBtn.style.display = "block";
+      goDownBtn.style.display = "block";
+    } else {
+      goTopBtn.style.display = "none";
+      goDownBtn.style.display = "none";
+    }
+  });
+
+  function goToTop() {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  function goToBottom() {
+    window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+  }
+
+  function goTo(id) {
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+    }
+  }
+
+  const images = document.querySelectorAll(".photo-container img");
+  const lightbox = document.getElementById("lightbox");
+  const lightboxImg = document.getElementById("lightbox-img");
+  const lightboxTitle = document.getElementById("lightbox-title");
+
+  images.forEach(img => {
+    img.addEventListener("click", () => {
+
+      // show image
+      lightbox.style.display = "flex";
+      lightboxImg.src = img.src;
+
+      // find month title (closest section)
+      const monthSection = img.closest(".month-section");
+      const title = monthSection.querySelector(".month-title").innerText;
+
+      // set title
+      lightboxTitle.innerText = title;
+    });
+  });
+
+  function closeLightbox() {
+    lightbox.style.display = "none";
+    lightboxImg.src = "";
+    lightboxTitle.innerText = "";
+  }
+
+  lightbox.addEventListener("click", (e) => {
+    if (e.target === lightbox) {
+      closeLightbox();
+    }
+  });
+  </script>
+</body>
+</html>
