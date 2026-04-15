@@ -152,29 +152,37 @@
   cursor: pointer;
 }
 
-#goTopBtn {
+#goTopBtn, #goDownBtn {
   position: fixed;
   right: 15px;
-  bottom: 20px; 
   z-index: 99999;
 
-  background: #444;
-  color: white;
-  border: none;
   width: 48px;
   height: 48px;
   border-radius: 50%;
+  border: none;
 
-  display: none;
-  cursor: pointer;
-
-  box-shadow: 0 6px 14px rgba(0,0,0,0.25); /* light shadow */
+  background: #444;
+  color: white;
   font-size: 18px;
 
+  cursor: pointer;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.25);
+
   -webkit-tap-highlight-color: transparent;
+  display: none;
 }
 
-#goTopBtn:hover {
+#goTopBtn {
+  bottom: 80px;
+}
+
+#goDownBtn {
+  bottom: 20px;
+}
+
+#goTopBtn:hover,
+#goDownBtn:hover {
   background: #222;
   transform: scale(1.08);
 }
@@ -616,6 +624,8 @@
 
 <!-- Up button -->
 <button id="goTopBtn" onclick="goToTop()">↑</button>
+<!-- Down button -->
+<button id="goDownBtn" onclick="goToBottom()">↓</button>
 
  <footer class="site-footer">© 2025 - 2026 Kevs404 💻✨</footer>
 
@@ -628,17 +638,24 @@
   };
 
   const goTopBtn = document.getElementById("goTopBtn");
+  const goDownBtn = document.getElementById("goDownBtn");
 
   window.addEventListener("scroll", () => {
     if (window.scrollY > 300) {
       goTopBtn.style.display = "block";
+      goDownBtn.style.display = "block";
     } else {
       goTopBtn.style.display = "none";
+      goDownBtn.style.display = "none";
     }
   });
 
   function goToTop() {
     window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  function goToBottom() {
+    window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
   }
 
   const images = document.querySelectorAll(".photo-container img");
