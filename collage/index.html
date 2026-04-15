@@ -442,7 +442,7 @@
 </div>
 
 <!-- December 2025 -->
-<div class="month-section">
+<div class="month-section" id="December-2025">
   <div class="month-title">December 2025 (My Love's Birthday, 1st Anniversarry, @San Pedro for Christmas and @Caloocan for New Years Eve.)</div>
     <!-- <p class="month-description">WIP
     </p> -->
@@ -590,6 +590,13 @@
  <footer class="site-footer">© 2025 - 2026 Kevs404 💻✨</footer>
 
  <script>
+  window.onload = function () {
+    const target = document.getElementById("December-2025");
+    if (target) {
+      target.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   const images = document.querySelectorAll(".photo-container img");
   const lightbox = document.getElementById("lightbox");
   const lightboxImg = document.getElementById("lightbox-img");
