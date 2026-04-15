@@ -151,6 +151,33 @@
   color: white;
   cursor: pointer;
 }
+
+#goTopBtn {
+  position: fixed;
+  right: 15px;
+  bottom: 20px; 
+  z-index: 99999;
+
+  background: #444;
+  color: white;
+  border: none;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+
+  display: none;
+  cursor: pointer;
+
+  box-shadow: 0 6px 14px rgba(0,0,0,0.25); /* light shadow */
+  font-size: 18px;
+
+  -webkit-tap-highlight-color: transparent;
+}
+
+#goTopBtn:hover {
+  background: #222;
+  transform: scale(1.08);
+}
 </style>
 </head>
 <body>
@@ -587,6 +614,9 @@
   </div>
 </div>
 
+<!-- Up button -->
+<button id="goTopBtn" onclick="goToTop()">↑</button>
+
  <footer class="site-footer">© 2025 - 2026 Kevs404 💻✨</footer>
 
  <script>
@@ -596,6 +626,20 @@
       target.scrollIntoView({ behavior: "smooth" });
     }
   };
+
+  const goTopBtn = document.getElementById("goTopBtn");
+
+  window.addEventListener("scroll", () => {
+    if (window.scrollY > 300) {
+      goTopBtn.style.display = "block";
+    } else {
+      goTopBtn.style.display = "none";
+    }
+  });
+
+  function goToTop() {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
 
   const images = document.querySelectorAll(".photo-container img");
   const lightbox = document.getElementById("lightbox");
