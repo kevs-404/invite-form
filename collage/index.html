@@ -103,17 +103,65 @@
       object-fit: cover;
     }
   }
+  .lightbox {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(15, 15, 15, 0.92);
+  justify-content: center;
+  align-items: center;
+}
+
+.lightbox-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 90%;
+  max-height: 90%;
+}
+
+.lightbox-title {
+  color: #fff;
+  font-size: 18px;
+  margin-bottom: 12px;
+  text-align: center;
+  font-weight: 600;
+  max-width: 100%;
+}
+
+.lightbox img {
+  max-width: 85vw;
+  max-height: 75vh; 
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+}
+
+.lightbox .close {
+  position: absolute;
+  top: 15px;
+  right: 25px;
+  font-size: 40px;
+  color: white;
+  cursor: pointer;
+}
 </style>
 </head>
 <body>
-<h1>Photo Collage</h1>
+<h1>Digital Photo Collage</h1>
 
 <div class="spotify-player">
-  <iframe src="https://open.spotify.com/embed/track/21RRhjnMsrvQpeQ10ptSBZ?utm_source=generator" width="100%" height="152" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+  <iframe src="https://open.spotify.com/embed/track/43kiDtoYD0nDJYxzQwclpT?utm_source=generator" width="100%" height="152" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
 </div>
 
 <div class="month-section">
-  <div class="month-title">Memories Behind the Photos</div>
+  <div class="month-title">Memories Behind these Photos</div>
     <p class="month-description">
       "Hi Shaine! Miss na miss na kita ng sobra 🥹, sorry sa lahat ng mga nagawa at nasabi ko, masyado akong nagpadala sa emosyon at galit nun this time Shaine please bigyan mo pa ako ng chance papatunayan at ipapakita ko sa'yo na natuto at pinagsisihan ko lahat lahat. Mahal na mahal kita Shaine."
     </p>
@@ -122,10 +170,10 @@
 
 <!-- December 2024 -->
 <div class="month-section">
-  <div class="month-title">December 2024</div>
-    <p class="month-description">
+  <div class="month-title">December 2024 (@Dec 14, nag plano tayo mag kita para pumunta sa national museum dahil nag presinta ako nasasama hehe. at eto rin yung time na first time ko sumakay ng tren para mag picture tayo kila teddy).</div>
+    <!-- <p class="month-description">
     Hi Shaine!, ito yung month na una tayong nagkita after natin magkalaro ng lol of legends dahil parehas tayong tuwang tuwa kapag maglaro at chill games tas puro kwentuhan lang ang saya nun kapag naaalala ko. Ang plano mo lng sana is nag sabi kang gagala ka pero nag presinta ako na sumama haha, at napag desisyunan natin na mag kita sa national museum at habang iniintay kita bigla mo akong sinampahan sa likod at buti na lng tlga namukhaan mo ako nun tas buti iba na yung itsura ko dun sa dp na gamit ko na kulay green yung background. kung yun pa rin siguro itsura ko nun baka umuwi ka na agad hahaha. Habang gumagala tayo sa national museum nung una nahihiya akong hawakan yung kamay mo habang naglalakad tayo pero dahil malamig sa loob at yung kamay ko naninigas na bigla ko na lng inabot para naka holding hands tayo habang nag lilibot ang saya nun sobra! Matapos natin libutin yung musuem kumain tayo sa jollibee at nung nag labas ako ng wallet ko bigla mong tinanong kung ano yung nasa picture sa wallet tas bigla kong binigay yung unang collectibles sa one of one na grad pic. at buti naman tinanggap mo tas bumili ka pa ng wallet nun para may mapaglagyan ka nung picture ko. ang saya at sarap sa pakiramdam nun.
-    </p>
+    </p> -->
   <div class="collage">
     <div class="photo-container"><img src="../assets/collage/dec1.jpg"></div>
     <div class="photo-container"><img src="../assets/collage/dec2.jpg"></div>
@@ -142,10 +190,10 @@
 
 <!-- January 2025 -->
 <div class="month-section">
-  <div class="month-title">January 2025</div>
-    <p class="month-description">
+  <div class="month-title">January 2025 (@Manila, dahil nabitin nung december nag kita ulit tayo ng January pumunta sa luneta park which is first time ko at nag pa picture kay tatang na mukhang pera.)</div>
+    <!-- <p class="month-description">
       After nung ilang pagkikita natin nung december nagkasundo ulit magkita ng midweek ng January dahil namiss ang isa't isa, Gumala ulit at pumunta sa luneta park tuwang tuwa ako nun dahil hindi pa ako nakakapunta sa luneta park ever since kahit nung elem na yan yung laging destination sa mga field trip hindi kasi ako nakakapunta dun kaya di ko alam itsura ng luneta park. Nilibot at gumala tayo sa luneta park nag pa picture kay manong na naka bike para may remmembrance natawa ka pa nga nung hinaranagan ko mismo yung statue ni Rizal nung nag picture haha! At sa pagkakatanda ko kila tropa na branch tayo nito pumunta at kumain nung jollibee. sabay umuwi na ring masaya.
-    </p>
+    </p> -->
   <div class="collage">
     <div class="photo-container"><img src="../assets/collage/jan1.jpg"></div>
     <div class="photo-container"><img src="../assets/collage/jan2.jpg"></div>
@@ -157,8 +205,8 @@
 
 <!-- February 2025 -->
 <div class="month-section">
-  <div class="month-title">February 2025</div>
-    <p class="month-description">Pumunta tayo neto sa festibol kasi gusto mo ipakita sakin yung may water fountain at yung mga damo na pwedeng upuan at mag picnic then gumala at nilibot tas naglaro ng arcade dito rin tayo ata nag karaoke nun na merong naka video hindi ko lng mailagay dito kasi masyadong malaki yung file. Then nung kakain na tayo habang inaantay natin yung pagkain nagulat ka nung pinaktia ko sa'yo yung sinabi kong regalo na ibibigay ko ang sarap sa pakiramdam makita yung reaction mo nun at kung titignan mo ulit yung picture namumula yung pisnge mo. kaya mula nun lagi na ako nag iisip ng mga pwedeng iregalo sa'yo kasi ang sarap sa feeling na nag gi give and take tayo parehas kahit minsan merong mga pagaaway at tampuhan na resulta na pagka immature ko. </p>
+  <div class="month-title">February 2025 (@Pestibol, gumala kain at picture picture, eto rin yung time na may surprise gift ako hehe).</div>
+    <!-- <p class="month-description">Pumunta tayo neto sa festibol kasi gusto mo ipakita sakin yung may water fountain at yung mga damo na pwedeng upuan at mag picnic then gumala at nilibot tas naglaro ng arcade dito rin tayo ata nag karaoke nun na merong naka video hindi ko lng mailagay dito kasi masyadong malaki yung file. Then nung kakain na tayo habang inaantay natin yung pagkain nagulat ka nung pinaktia ko sa'yo yung sinabi kong regalo na ibibigay ko ang sarap sa pakiramdam makita yung reaction mo nun at kung titignan mo ulit yung picture namumula yung pisnge mo. kaya mula nun lagi na ako nag iisip ng mga pwedeng iregalo sa'yo kasi ang sarap sa feeling na nag gi give and take tayo parehas kahit minsan merong mga pagaaway at tampuhan na resulta na pagka immature ko. </p> -->
   <div class="collage">
     <div class="photo-container"><img src="../assets/collage/feb1.jpg"></div>
     <div class="photo-container"><img src="../assets/collage/feb2.jpg"></div>
@@ -180,10 +228,10 @@
 
 <!-- March 2025 -->
 <div class="month-section">
-  <div class="month-title">March 2025</div>
-    <p class="month-description">Pumunta ka naman nito sa bahay tas gumala tayo sa sm fairview nilibot natin na miski ako hindi ko rin kabisado pa yun hahaha, Chineck din natin yung arcade dito sa sm fairview at naglaro din tayo tas basketball then nung nakita natin yung photo booth
+  <div class="month-title">March 2025 (@SM Fairview, toms world at nag pictorial sa photo booth na dinisplay ko ngayun sa picture frame).</div>
+    <!-- <p class="month-description">Pumunta ka naman nito sa bahay tas gumala tayo sa sm fairview nilibot natin na miski ako hindi ko rin kabisado pa yun hahaha, Chineck din natin yung arcade dito sa sm fairview at naglaro din tayo tas basketball then nung nakita natin yung photo booth
     triny din natin tas parehas tayong may soft at hard copy nun na hanggang ngayon naka display pa rin sa picture frame ko, tas pagkatapos nun umuwi tayo sa bahay para kumain, magpahinga, uminom, maglaro at matulog.
-    </p>
+    </p> -->
   <div class="collage">
     <div class="photo-container"><img src="../assets/collage/mar6.jpg"></div>
     <div class="photo-container"><img src="../assets/collage/mar7.jpg"></div>
@@ -195,9 +243,9 @@
 
 <!-- April 2025 -->
 <div class="month-section">
-  <div class="month-title">April 2025</div>
-    <p class="month-description">Long weekend to dahil may holyweek na magaganap kaya pumunta ka ulit sa bahay kaya kumain at nanuod tayo ng movie. then dun mo na nga nahuli yung may chinat ako sa messenger nung time na nagka away tayo. maling mali ko yun aminado ako dun. at dumating yung araw na nasa bahay ka pa rin nag uusap tayo at malapit na yung birthday ni lola kaya nag prepare tayo ng susuotin natin dahil need naka white at formal attire. ang ganda mo run sa suot mo na white at black bagay na bagay sa'yo yun napaisip nga ako na sana white na ganun din yung susuotin mo kapag ikakasal na tayo. Kumain at nag inom tayo sa birthday ni lola then na meet mo yung mga pinsan at tito, tita ko. ups and downs yung emotion natin parehas dito dahil kaka galing lng natin sa matinding away na ako yung kasalanan sorry.
-    </p>
+  <div class="month-title">April 2025 (Holy Week, Lola Norly's Birthday)</div>
+    <!-- <p class="month-description">Long weekend to dahil may holyweek na magaganap kaya pumunta ka ulit sa bahay kaya kumain at nanuod tayo ng movie. then dun mo na nga nahuli yung may chinat ako sa messenger nung time na nagka away tayo. maling mali ko yun aminado ako dun. at dumating yung araw na nasa bahay ka pa rin nag uusap tayo at malapit na yung birthday ni lola kaya nag prepare tayo ng susuotin natin dahil need naka white at formal attire. ang ganda mo run sa suot mo na white at black bagay na bagay sa'yo yun napaisip nga ako na sana white na ganun din yung susuotin mo kapag ikakasal na tayo. Kumain at nag inom tayo sa birthday ni lola then na meet mo yung mga pinsan at tito, tita ko. ups and downs yung emotion natin parehas dito dahil kaka galing lng natin sa matinding away na ako yung kasalanan sorry.
+    </p> -->
   <div class="collage">
     <div class="photo-container"><img src="../assets/collage/april1.jpg"></div>
     <div class="photo-container"><img src="../assets/collage/april2.jpg"></div>
@@ -224,9 +272,9 @@
 
 <!-- May 2025 -->
 <div class="month-section">
-  <div class="month-title">May 2025</div>
-    <p class="month-description">Ito naman yung ako naman pumunta sa inyo at gumala tayo sa festibol tsaka pumunta rin tayo sa grand canal para dun sa event ng company mo. Halos buong mall na yun inikot at nakipag kulitan tayo sa mga naka mascot. Para akong bumalik sa pagkabata dahil naging malaya ako i appreciate yung mga nakikita ko sa paligid at maging masaya lang. Hindi alintala yung pagod dahil parehas tayong busog mga mata at tiyan natin nung time na yun. Tapos yun pa yung time na nang hingi ka ng jersey sa ka work mo at nag request ka pa ulit ng isa para pwede ko mahiram yung isa kapag andyan ako sa inyo. Tas pinapang porma din natin yun kapag lalabas at gagala. Ang saya lang sobra. Tas naalala ko naubos din pala natin yung pang 4 person na chaofan tas 12 piraso yatang siomai yun. boljak na boljak sobra at grabeng memories nabuo natin dito. salamat shaine.
-    </p>
+  <div class="month-title">May 2025 (Venice Grand Canal Mall || Casio Event ft Stuart Ramos)</div>
+    <!-- <p class="month-description">Ito naman yung ako naman pumunta sa inyo at gumala tayo sa festibol tsaka pumunta rin tayo sa grand canal para dun sa event ng company mo. Halos buong mall na yun inikot at nakipag kulitan tayo sa mga naka mascot. Para akong bumalik sa pagkabata dahil naging malaya ako i appreciate yung mga nakikita ko sa paligid at maging masaya lang. Hindi alintala yung pagod dahil parehas tayong busog mga mata at tiyan natin nung time na yun. Tapos yun pa yung time na nang hingi ka ng jersey sa ka work mo at nag request ka pa ulit ng isa para pwede ko mahiram yung isa kapag andyan ako sa inyo. Tas pinapang porma din natin yun kapag lalabas at gagala. Ang saya lang sobra. Tas naalala ko naubos din pala natin yung pang 4 person na chaofan tas 12 piraso yatang siomai yun. boljak na boljak sobra at grabeng memories nabuo natin dito. salamat shaine.
+    </p> -->
   <div class="collage">
     <div class="photo-container"><img src="../assets/collage/may (1).jpg"></div>
     <div class="photo-container"><img src="../assets/collage/may (2).jpg"></div>
@@ -283,8 +331,8 @@
 
 <!-- June 2025 -->
 <div class="month-section">
-  <div class="month-title">June 2025</div>
-    <p class="month-description">Ito yung pumunta ako sa inyo at ilang araw din ako nag stay sa inyo nag laro, kumain, gumala then hihilutin kita kapag masakit yung likod at paa mo, ito rin yung time na namali ka ng apak dun sa bayan kaya napilay yung isa mong paa kaya hinihilot ktia gabi gabi dahil sobrang botchog nung paa mo. Wala akong picture masyadong nakuha dito sa buwan na to dahil magkasama tayo nun at sa bahay lng ninyo tayo nag stay kaya hindi na rin nakapag picture. </p>
+  <div class="month-title">June 2025 (Halos 2 weeks ako dyan sa inyo tas nag ft tayo mag mang inasal kasu pauwi na ulit dahil sa project).</div>
+    <!-- <p class="month-description">Ito yung pumunta ako sa inyo at ilang araw din ako nag stay sa inyo nag laro, kumain, gumala then hihilutin kita kapag masakit yung likod at paa mo, ito rin yung time na namali ka ng apak dun sa bayan kaya napilay yung isa mong paa kaya hinihilot ktia gabi gabi dahil sobrang botchog nung paa mo. Wala akong picture masyadong nakuha dito sa buwan na to dahil magkasama tayo nun at sa bahay lng ninyo tayo nag stay kaya hindi na rin nakapag picture. </p> -->
   <div class="collage">
     <div class="photo-container"><img src="../assets/collage/june (1).jpg"></div>
     <div class="photo-container"><img src="../assets/collage/june (2).jpg"></div>
@@ -296,8 +344,8 @@
 
 <!-- July 2025 -->
 <div class="month-section">
-  <div class="month-title">July 2025</div>
-    <p class="month-description">Onti lng din yung nakuha kong picture natin dito dahil nasa inyo rin tayo nun, ang naaalala ko dito yung pina try mo sakin yung skin care mo na ilang beses ko pa lng ginagamit is effective agad at ang lambot sa mukha tas hindi oily. Kaya kinuha ko yung cellphone ko para mag picture habang ginagawa natin para makita natin yung progress hahaha! Pag kasama kita dyan sa inyo napaka productive lagi ng mag hapon ko hanggang sa bago makatulog gustong gusto ko yung hihilutin kita para makapahinga ka ng maayos at para bukas laban ulit sa trabaho, namamalenkge at naglilinis tayo ng bahay mo tas pagkatapos maliligo at maglalaro na.</p>
+  <div class="month-title">July 2025 (Skincare era and massage)</div>
+    <!-- <p class="month-description">Onti lng din yung nakuha kong picture natin dito dahil nasa inyo rin tayo nun, ang naaalala ko dito yung pina try mo sakin yung skin care mo na ilang beses ko pa lng ginagamit is effective agad at ang lambot sa mukha tas hindi oily. Kaya kinuha ko yung cellphone ko para mag picture habang ginagawa natin para makita natin yung progress hahaha! Pag kasama kita dyan sa inyo napaka productive lagi ng mag hapon ko hanggang sa bago makatulog gustong gusto ko yung hihilutin kita para makapahinga ka ng maayos at para bukas laban ulit sa trabaho, namamalenkge at naglilinis tayo ng bahay mo tas pagkatapos maliligo at maglalaro na.</p> -->
   <div class="collage">
     <div class="photo-container"><img src="../assets/collage/july (1).jpg"></div>
     <div class="photo-container"><img src="../assets/collage/july (2).jpg"></div>
@@ -309,9 +357,9 @@
 
 <!-- August 2025 -->
 <div class="month-section">
-  <div class="month-title">August 2025</div>
-    <p class="month-description">Birthmonth ko at ni mama, matagal natin pinagplanuhan yung boodle fight at naganap nga nung pumunta tayo sa bahay nagkatampuhan at magkagalit tayo nun pero iniraos natin yung birthday ni mama, then yung dumating naman yung birthday ko kasagsagan ng niru rush yung project ko sa work nag plano ka mag staycation matagal mo na rin tong plano kaya nag prepare tayo ng mga dadalhin at need gawin para all goods kapag pumunta tayo sa staycation natin. Sobrang sayang kasama ka at kitang kita sa reaksyon mo na tuwang tuwa ka nung mga time na yun. kaya isa rin ito sa mga dinamihan kong picture kasi ang daming memories yung nabuo at ginawa natin dito. Ang daming set ng damit na terno tayo at nag picture. hanggang sa pag tulong si dudu at bubu yung suot natin then ang karaoke, inom hanggang sa nag pahinga na. 
-    </p>
+  <div class="month-title">August 2025 (Azure Staycation || My Birthday)</div>
+    <!-- <p class="month-description">Birthmonth ko at ni mama, matagal natin pinagplanuhan yung boodle fight at naganap nga nung pumunta tayo sa bahay nagkatampuhan at magkagalit tayo nun pero iniraos natin yung birthday ni mama, then yung dumating naman yung birthday ko kasagsagan ng niru rush yung project ko sa work nag plano ka mag staycation matagal mo na rin tong plano kaya nag prepare tayo ng mga dadalhin at need gawin para all goods kapag pumunta tayo sa staycation natin. Sobrang sayang kasama ka at kitang kita sa reaksyon mo na tuwang tuwa ka nung mga time na yun. kaya isa rin ito sa mga dinamihan kong picture kasi ang daming memories yung nabuo at ginawa natin dito. Ang daming set ng damit na terno tayo at nag picture. hanggang sa pag tulong si dudu at bubu yung suot natin then ang karaoke, inom hanggang sa nag pahinga na. 
+    </p> -->
   <div class="collage">
     <div class="photo-container"><img src="../assets/collage/aug (1).jpg"></div>
     <div class="photo-container"><img src="../assets/collage/aug (2).jpg"></div>
@@ -338,9 +386,9 @@
 
 <!-- September 2025 -->
 <div class="month-section">
-  <div class="month-title">September 2025</div>
-    <p class="month-description">Ito yung buwan matapos kitang suyuin at magkabati tayo bumalik ulit sa dati tas sa inyo ulit ako tumira ng halos ilang linggo, kumain nag jogging, pudtrip tas nag com shop tayo nito. Ang saya saya lng kasi hindi na tayo masyado nag aaway tas kapag weekend nag lilinis tayo sabay laro at nood ng movies.
-    </p>
+  <div class="month-title">September 2025 (Comshop and jogging)</div>
+    <!-- <p class="month-description">Ito yung buwan matapos kitang suyuin at magkabati tayo bumalik ulit sa dati tas sa inyo ulit ako tumira ng halos ilang linggo, kumain nag jogging, pudtrip tas nag com shop tayo nito. Ang saya saya lng kasi hindi na tayo masyado nag aaway tas kapag weekend nag lilinis tayo sabay laro at nood ng movies.
+    </p> -->
   <div class="collage">
     <div class="photo-container"><img src="../assets/collage/sep (1).jpg"></div>
     <div class="photo-container"><img src="../assets/collage/sep (2).jpg"></div>
@@ -358,9 +406,9 @@
 
 <!-- October 2025 -->
 <div class="month-section">
-  <div class="month-title">October 2025</div>
-    <p class="month-description">Ito yung nasa inyo pa rin ako nito ng halos ilang buwan ulit bago ako umuwi ng end of month kasama ka bumyahe para sa magiging APE checkup ko sa head office, marami tayong sinubukan na mga putahe na lutuin at kainin. Tas nag try din tayo gumawa ng sarili nating mga clay design at ang saya nun kasi pwede natin yung gawin keychain at ilagay pandagdag design sa mga bag natin. Tas ito rin yung buwan na inabot tayo ng sakit kaya di gaano nakapag pudtrip sa labas dahil parehas walang ganang kumain pero nung gumaling na nag hahanap na ulit ng mga ma pu pudtrip at gala.
-    </p>
+  <div class="month-title">October 2025 (Chaochao fried rice and Homemade Donut keychain)</div>
+    <!-- <p class="month-description">Ito yung nasa inyo pa rin ako nito ng halos ilang buwan ulit bago ako umuwi ng end of month kasama ka bumyahe para sa magiging APE checkup ko sa head office, marami tayong sinubukan na mga putahe na lutuin at kainin. Tas nag try din tayo gumawa ng sarili nating mga clay design at ang saya nun kasi pwede natin yung gawin keychain at ilagay pandagdag design sa mga bag natin. Tas ito rin yung buwan na inabot tayo ng sakit kaya di gaano nakapag pudtrip sa labas dahil parehas walang ganang kumain pero nung gumaling na nag hahanap na ulit ng mga ma pu pudtrip at gala.
+    </p> -->
   <div class="collage">
     <div class="photo-container"><img src="../assets/collage/oct (1).jpg"></div>
     <div class="photo-container"><img src="../assets/collage/oct (2).jpg"></div>
@@ -373,9 +421,9 @@
 
 <!-- November 2025 -->
 <div class="month-section">
-  <div class="month-title">November 2025</div>
-    <p class="month-description">WIP
-    </p>
+  <div class="month-title">November 2025 (SM Fairview FT and picture picture bago umuwi sa caloocan)</div>
+    <!-- <p class="month-description">WIP
+    </p> -->
   <div class="collage">
     <div class="photo-container"><img src="../assets/collage/nov (1).jpg"></div>
     <div class="photo-container"><img src="../assets/collage/nov (2).jpg"></div>
@@ -393,6 +441,51 @@
   </div>
 </div>
 
- <footer class="site-footer">© 2025 Kevs404 💻✨</footer>
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <span class="close" onclick="closeLightbox()">×</span>
+
+  <div class="lightbox-content">
+    <div class="lightbox-title" id="lightbox-title"></div>
+    <img id="lightbox-img">
+  </div>
+</div>
+
+ <footer class="site-footer">© 2025 - 2026 Kevs404 💻✨</footer>
+
+ <script>
+  const images = document.querySelectorAll(".photo-container img");
+  const lightbox = document.getElementById("lightbox");
+  const lightboxImg = document.getElementById("lightbox-img");
+  const lightboxTitle = document.getElementById("lightbox-title");
+
+  images.forEach(img => {
+    img.addEventListener("click", () => {
+
+      // show image
+      lightbox.style.display = "flex";
+      lightboxImg.src = img.src;
+
+      // find month title (closest section)
+      const monthSection = img.closest(".month-section");
+      const title = monthSection.querySelector(".month-title").innerText;
+
+      // set title
+      lightboxTitle.innerText = title;
+    });
+  });
+
+  function closeLightbox() {
+    lightbox.style.display = "none";
+    lightboxImg.src = "";
+    lightboxTitle.innerText = "";
+  }
+
+  lightbox.addEventListener("click", (e) => {
+    if (e.target === lightbox) {
+      closeLightbox();
+    }
+  });
+  </script>
 </body>
 </html>
