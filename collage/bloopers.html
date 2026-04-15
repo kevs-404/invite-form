@@ -67,13 +67,13 @@
   .photo-container video {
     width: 100%;
     height: 400px;
-    object-fit: cover;
+    object-fit: contain;
     display: block;
     border-radius: 10px;
    }
 
   .photo-container:hover {
-    transform: scale(1.05) rotate(2deg);
+    /* transform: scale(1.05) rotate(2deg); */
     box-shadow: 0 8px 16px rgba(0,0,0,0.3);
     z-index: 10;
   }
@@ -306,27 +306,27 @@
   <div class="collage">
     <!-- VIDEO 1 -->
     <div class="photo-container">
-      <video controls>
+      <video controls title="Test Panorama">
         <source src="../assets/collage/others (1).mp4" type="video/mp4">
       </video>
     </div>
 
     <!-- VIDEO 2 -->
     <div class="photo-container">
-      <video controls>
+      <video controls title="Smol Pototoy">
         <source src="../assets/collage/others (2).mp4" type="video/mp4">
       </video>
     </div>
 
     <!-- VIDEO 3 -->
     <div class="photo-container">
-      <video controls>
+      <video controls title="Lasheng">
         <source src="../assets/collage/others (3).mp4" type="video/mp4">
       </video>
     </div>
 
     <!-- VIDEO 4 -->
-    <div class="photo-container">
+    <div class="photo-container" title="Mabisa bumubula">
       <video controls>
         <source src="../assets/collage/others (4).mp4" type="video/mp4">
       </video>
