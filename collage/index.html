@@ -239,6 +239,32 @@
 .side-nav a:hover {
   background: #eee;
 }
+
+.nav-btn {
+  position: absolute;
+  top: 55%;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.5);
+  color: white;
+  border: none;
+  font-size: 30px;
+  padding: 10px 15px;
+  cursor: pointer;
+  border-radius: 8px;
+  z-index: 10000;
+}
+
+.nav-btn.left {
+  left: 20px;
+}
+
+.nav-btn.right {
+  right: 20px;
+}
+
+.nav-btn:hover {
+  background: rgba(0,0,0,0.8);
+}
 </style>
 </head>
 <body>
@@ -751,10 +777,14 @@
 <div class="lightbox" id="lightbox">
   <span class="close" onclick="closeLightbox()">×</span>
 
+  <button class="nav-btn left" onclick="prevImage()">‹</button>
+
   <div class="lightbox-content">
     <div class="lightbox-title" id="lightbox-title"></div>
     <img id="lightbox-img">
   </div>
+
+  <button class="nav-btn right" onclick="nextImage()">›</button>
 </div>
 
 <!-- Up button -->
@@ -804,26 +834,54 @@
     }
   }
 
-  const images = document.querySelectorAll(".photo-container img");
+  const images = Array.from(document.querySelectorAll(".photo-container img"));
   const lightbox = document.getElementById("lightbox");
   const lightboxImg = document.getElementById("lightbox-img");
   const lightboxTitle = document.getElementById("lightbox-title");
 
-  images.forEach(img => {
+  let currentIndex = 0;
+
+  images.forEach((img, index) => {
     img.addEventListener("click", () => {
-
-      // show image
-      lightbox.style.display = "flex";
-      lightboxImg.src = img.src;
-
-      // find month title (closest section)
-      const monthSection = img.closest(".month-section");
-      const title = monthSection.querySelector(".month-title").innerText;
-
-      // set title
-      lightboxTitle.innerText = title;
+      openLightbox(index);
     });
   });
+
+  function openLightbox(index) {
+    currentIndex = index;
+    lightbox.style.display = "flex";
+    updateLightbox();
+  }
+
+  function updateLightbox() {
+    const img = images[currentIndex];
+
+    // show image
+    lightboxImg.src = img.src;
+
+    // find month title (closest section)
+    const monthSection = img.closest(".month-section");
+    const title = monthSection.querySelector(".month-title").innerText;
+
+    // set title
+    lightboxTitle.innerText = title;
+  }
+
+  function nextImage() {
+    currentIndex++;
+    if (currentIndex >= images.length) {
+      currentIndex = 0;
+    }
+    updateLightbox();
+  }
+
+  function prevImage() {
+    currentIndex--;
+    if (currentIndex < 0) {
+      currentIndex = images.length - 1;
+    }
+    updateLightbox();
+  }
 
   function closeLightbox() {
     lightbox.style.display = "none";
