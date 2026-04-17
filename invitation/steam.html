@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" href="../assets/programmerist.png" type="image/x-icon" />
-    <title>🎮 Lol Time</title>
+    <title>🎮 Steam Time</title>
     <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css"/>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -14,12 +14,12 @@
     <style>
       body {
         font-family: "Arial", sans-serif;
-        background: url("../assets/test2.jpg") no-repeat center center fixed;
+        background: url("../assets/test6.jpg") no-repeat center center fixed;
         background-size: cover; 
         display: flex;
         justify-content: center;
         padding: 30px;
-        color: white;
+        color: black;
       }
 
       .form-container {
@@ -39,7 +39,7 @@
       .form-container p {
         margin-bottom: 20px;
         font-size: 14px;
-        color: white;
+        color: black;
       }
 
       .form-group {
@@ -51,7 +51,7 @@
         display: block;
         font-size: 14px;
         margin-bottom: 6px;
-        color: white;
+        color: black;
       }
 
       input[type="text"],
@@ -182,7 +182,7 @@
       }
 
       .nav-links a {
-        color: white;
+        color: black;
         text-decoration: none;
         font-size: 14px;
         text-shadow: 0 2px 6px rgba(0,0,0,0.6);
@@ -215,6 +215,7 @@
 
         .nav-links a {
           padding: 10px 0;
+          color: white;
         }
 
         .nav-links.show {
@@ -232,30 +233,36 @@
       <div class="nav-links" id="navLinks">
         <a href="../index.html">Home</a>
         <a href="coffee.html">Coffee</a>
-        <a href="steam.html">Steam</a>
+        <a href="lol.html">LoL</a>
         <a href="../games/mindgames.html">Memory</a>
         <a href="../games/puzzlegames.html">Puzzle</a>
         <a href="../collage/index.html">Collage</a>
         <a href="../collage/bloopers.html">Bloopers</a>
       </div>
     </nav>
-    
+
     <div class="invite-card">
       <h2>🎮 Game Invitation</h2>
-      <p>Would you like to play lol of legends with me?</p>
+      <p>Would you like to play steam games with me?</p>
       <form id="inviteForm">
         <div class="form-group">
           <label for="game">Choose a game you want to play: *</label>
           <select id="game" name="game" required>
             <option value="" disabled selected>Select a game</option>
-            <option value="LOL OF LEGENDS 😎🎮">LOL OF LEGENDS 😎🎮</option>
-            <option value="WR OF WILDRIFT 😎🎮">WR OF WILDRIFT 😎🎮</option>
+            <option value="MEDIEVAL DYNASTY 😎🎮">Medieval Dynasty😎🎮</option>
+            <option value="SUPERMARKET TOGETHER 😎🎮">Supermarket Together 😎🎮</option>
           </select>
         </div>
 
         <div class="form-group">
-          <label for="name">IGN: *</label>
-          <input type="text" id="name" name="Name" placeholder="RIOT#ID" pattern="^.+#.+$" title="Format must include a # symbol, e.g., Name#ID" value="" required/>
+        <label>IGN/Friend Code: *</label>
+
+        <input type="text" id="name" name="Name" placeholder="Enter IGN/Friend Code" required />
+
+        <label>
+            <input type="checkbox" id="alreadyFriends" />
+            Already friends / Send a quick invite
+        </label>
         </div>
 
         <div class="form-group">
@@ -291,15 +298,29 @@
         navLinks.classList.toggle("show");
       });
 
+      // dynamic fields for name and steam invite
+      const checkbox = document.getElementById("alreadyFriends");
+      const nameInput = document.getElementById("name");
+
+      checkbox.addEventListener("change", function () {
+        if (this.checked) {
+            nameInput.value = "";
+            nameInput.placeholder = "Enter Steam Quick Invite link";
+        } else {
+            nameInput.value = "";
+            nameInput.placeholder = "IGN / Friend Code";
+        }
+      });
+      
       // change bg upon changing the game
       const gameSelect = document.getElementById("game");
 
       gameSelect.addEventListener("change", function () {
-        if (this.value === "LOL OF LEGENDS 😎🎮") {
-          document.body.style.background = "url('../assets/test2.jpg') no-repeat center center fixed";
+        if (this.value === "MEDIEVAL DYNASTY 😎🎮") {
+          document.body.style.background = "url('../assets/test6.jpg') no-repeat center center fixed";
         } 
-        else if (this.value === "WR OF WILDRIFT 😎🎮") {
-          document.body.style.background = "url('../assets/test5.jpg') no-repeat center center fixed";
+        else if (this.value === "SUPERMARKET TOGETHER 😎🎮") {
+          document.body.style.background = "url('../assets/test7.jpg') no-repeat center center fixed";
         }
 
         document.body.style.backgroundSize = "cover";

