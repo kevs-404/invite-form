@@ -266,6 +266,13 @@
 .nav-btn:hover {
   background: rgba(0,0,0,0.8);
 }
+
+.footer-links {
+  display: flex;
+  justify-content: center;
+  gap: 5px; 
+  padding: 10px 0;
+}
 </style>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-H9PRXJZM8J"></script>
 <script>
@@ -801,8 +808,12 @@
 <!-- Down button -->
 <button id="goDownBtn" onclick="goToBottom()">↓</button>
 
- <center><a href="bloopers.html" class="site-footer-bloopers">Bloopers/Others</a></center>
- <center><a href="../index.html" class="site-footer-bloopers">Home</a></center>
+  <div class="footer-links" id="footer-link">
+   <a href="../index.html" class="site-footer-bloopers">Home</a>
+   <a href="../invitation/lol.html" class="site-footer-bloopers"> -> LoL/Wr <-</a>
+   <a href="../invitation/steam.html" class="site-footer-bloopers">-> Steam <-</a>
+   <a href="bloopers.html" class="site-footer-bloopers">Bloopers/Others</a>
+ </div>
  <footer class="site-footer">© 2025 - 2026 Kevs404 💻✨</footer>
 
  <script>
@@ -842,7 +853,7 @@
         console.log("Failed...", error);
       });
 
-    const target = document.getElementById("title");
+    const target = document.getElementById("footer-link");
     if (target) {
       target.scrollIntoView({ behavior: "smooth" });
     }
