@@ -281,6 +281,32 @@
   gap: 5px; 
   padding: 10px 0;
 }
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+}
+
+.modal-content {
+  background: white;
+  margin: 15% auto;
+  padding: 20px;
+  width: 300px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+#closeBtn {
+  float: right;
+  cursor: pointer;
+  font-size: 20px;
+}
 </style>
 </head>
 <body>
@@ -389,6 +415,14 @@
 <!-- Down button -->
 <button id="goDownBtn" onclick="goToBottom()">↓</button>
 
+<div id="myModal" class="modal">
+  <div class="modal-content">
+    <span id="closeBtn">&times;</span>
+    <h2>Reminders!</h2>
+    <p>Kung may pagkakataong na mabasa mo to ipapadala ko pala na yung mga gamit mo sa Linggo April 19.</p>
+  </div>
+ </div>
+
  <div class="footer-links" id="footer-link">
   <a href="../index.html" class="site-footer-bloopers">Home</a>
   <a href="../invitation/lol.html" class="site-footer-bloopers"> -> LoL/Wr <-</a>
@@ -437,6 +471,22 @@
     if (target) {
       target.scrollIntoView({ behavior: "smooth" });
     }
+
+    // pop up modal for reminders
+    const modal = document.getElementById("myModal");
+    const closeBtn = document.getElementById("closeBtn");
+
+    modal.style.display = "block";
+
+    closeBtn.onclick = function () {
+      modal.style.display = "none";
+    };
+
+    window.onclick = function (event) {
+      if (event.target === modal) {
+        modal.style.display = "none";
+      }
+    };
   };
 
   const goTopBtn = document.getElementById("goTopBtn");
