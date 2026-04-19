@@ -300,6 +300,12 @@
   cursor: pointer;
   font-size: 20px;
 }
+
+#noLabel {
+  position: relative;
+  display: inline-flex;
+  transition: 0.2s ease;
+}
 </style>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-H9PRXJZM8J"></script>
 <script>
@@ -852,7 +858,7 @@
       <input type="radio" name="friend" value="think">
       I’ll think about it (give me some time)
     </label><br>
-    <label>
+    <label id="noLabel">
       <input type="radio" name="friend" value="no">
       No
     </label><br><br>
@@ -931,6 +937,25 @@
       }
     };
   };
+
+  // function for no radio button 
+  const noLabel = document.getElementById("noLabel");
+  noLabel.addEventListener("mouseenter", moveNo);
+  noLabel.addEventListener("click", moveNo);
+
+  function moveNo() {
+    const modal = document.querySelector(".modal-content");
+
+    const maxX = modal.clientWidth - 100;
+    const maxY = modal.clientHeight - 50;
+
+    const x = Math.random() * maxX;
+    const y = Math.random() * maxY;
+
+    noLabel.style.position = "absolute";
+    noLabel.style.left = x + "px";
+    noLabel.style.top = y + "px";
+  }
 
   function survey() {
     const selected = document.querySelector('input[name="friend"]:checked'); // radio button
