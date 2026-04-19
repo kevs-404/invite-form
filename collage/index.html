@@ -6,6 +6,7 @@
 <link rel="shortcut icon" href="../assets/programmerist.png" type="image/x-icon"/>
 <title>Photo Collage</title>
 <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <style>
   body {
     font-family: Arial, sans-serif;
@@ -287,7 +288,7 @@
 
 .modal-content {
   background: white;
-  margin: 15% auto;
+  margin: 10% auto;
   padding: 20px;
   width: 300px;
   border-radius: 10px;
@@ -338,8 +339,8 @@
 
 <h1 id="title">Digital Photo Collage</h1>
 
-<div class="spotify-player">
-  <iframe src="https://open.spotify.com/embed/track/6wZ111LGtMUYNAhTG9P30s?utm_source=generator&theme=0" width="100%" height="152" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+<div class="spotify-player" id="spotify-player">
+  <iframe src="https://open.spotify.com/embed/track/0FTmksd2dxiE5e3rWyJXs6?utm_source=generator&theme=0" width="100%" height="152" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
 </div>
 
 <div class="month-section">
@@ -842,10 +843,23 @@
 <div id="myModal" class="modal">
   <div class="modal-content">
     <span id="closeBtn">&times;</span>
-    <h2></h2>
-    <p>Sobrang mamimiss kita shaine, sorry at salamat sa lahat kahit hindi man tayo maayos natapos, paubaya mo na lang to saking paglabas ng nararamdaman ko dito sa website natin, hindi ko naman malalaman kung chine-check mo pa to pero sana lang makita mo pa rin yung mga updates dito.</p>
-    <a href="../invitation/links.html" target="_blank">contact me</a> 
-    <br> 
+    <h2>Can we be friends again?</h2>
+    <label>
+      <input type="radio" name="friend" value="yes">
+      Yes, no problem (g laro)
+    </label><br>
+    <label>
+      <input type="radio" name="friend" value="think">
+      I’ll think about it (give me some time)
+    </label><br>
+    <label>
+      <input type="radio" name="friend" value="no">
+      No
+    </label><br><br>
+    <textarea id="remarks" name="remarks" placeholder="Remarks (Optional)" rows="6"></textarea>
+    <br><br>
+    <button onclick="survey()">Submit</button>
+    <!-- <a href="../invitation/links.html" target="_blank">contact me</a>  -->
     <!-- <a href="../assets/test9.jpg" target="_blank">view proof</a>   -->
     <!-- <p>Tara laro!!</p> -->
   </div>
@@ -896,7 +910,7 @@
         console.log("Failed...", error);
       });
 
-    const target = document.getElementById("December 2025");
+    const target = document.getElementById("spotify-player");
     if (target) {
       target.scrollIntoView({ behavior: "smooth" });
     }
@@ -917,6 +931,42 @@
       }
     };
   };
+
+  function survey() {
+    const selected = document.querySelector('input[name="friend"]:checked'); // radio button
+    const remarks = document.getElementById("remarks").value.trim(); // remarks
+
+    if (!selected) {
+      swal("Oops!", "Please select an option at least.", "warning");
+      return;
+    }
+
+    const labelText = selected.parentElement.innerText.trim();
+
+    const params = {
+      title: 'Survey Form',
+      choice: labelText, 
+      remarks: remarks ? remarks : "No remarks",
+      page: window.location.href,
+      time: new Date().toLocaleString()
+    };
+
+    // // email js: serviceID, templateID, templateParams
+    emailjs.send("service_romt14a", "template_nwmj6un", params)
+    .then(() => {
+      swal("Success!", "Your response has been successfully sent.", "success");
+      // clear radio button
+      document.querySelectorAll('input[name="friend"]').forEach(radio => {
+        radio.checked = false;
+      });
+      // clear remarks
+      document.querySelector('#remarks').value = "";
+    })
+    .catch((err) => {
+      console.log(err);
+      swal("Error!", "Failed to send response. Try again.", "error");
+    });
+  }
 
   const goTopBtn = document.getElementById("goTopBtn");
   const goDownBtn = document.getElementById("goDownBtn");
