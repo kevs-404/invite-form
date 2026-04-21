@@ -849,7 +849,8 @@
 <div id="myModal" class="modal">
   <div class="modal-content">
     <span id="closeBtn">&times;</span>
-    <h2>I already bought Travellers Rest — maybe we can play sometime, or should I master it first 🍺? xx</h2>
+    <!-- <h2>I already bought Travellers Rest — maybe we can play sometime, or should I master it first 🍺? xx</h2>-->
+    <h2>Can we be friends again?</h2> 
     <label>
       <input type="radio" name="friend" value="yes">
       Yes, no problem (g laro)
@@ -867,8 +868,8 @@
     <button onclick="survey()">Submit</button>
     <br><br>
     <a href="../invitation/links.html" target="_blank">contact me</a>
-    <br>
-    <a href="../invitation/steam.html" target="_blank">test prod</a>
+    <!-- <br>
+    <a href="../invitation/steam.html" target="_blank">test prod</a> -->
     <!-- <a href="../assets/test9.jpg" target="_blank">view proof</a>   -->
     <!-- <p>Tara laro!!</p> -->
   </div>
@@ -942,23 +943,23 @@
   };
 
   // function for no radio button 
-  const noLabel = document.getElementById("noLabel");
-  noLabel.addEventListener("mouseenter", moveNo);
-  noLabel.addEventListener("click", moveNo);
+  // const noLabel = document.getElementById("noLabel");
+  // noLabel.addEventListener("mouseenter", moveNo);
+  // noLabel.addEventListener("click", moveNo);
 
-  function moveNo() {
-    const modal = document.querySelector(".modal-content");
+  // function moveNo() {
+  //   const modal = document.querySelector(".modal-content");
 
-    const maxX = modal.clientWidth - 100;
-    const maxY = modal.clientHeight - 50;
+  //   const maxX = modal.clientWidth - 100;
+  //   const maxY = modal.clientHeight - 50;
 
-    const x = Math.random() * maxX;
-    const y = Math.random() * maxY;
+  //   const x = Math.random() * maxX;
+  //   const y = Math.random() * maxY;
 
-    noLabel.style.position = "absolute";
-    noLabel.style.left = x + "px";
-    noLabel.style.top = y + "px";
-  }
+  //   noLabel.style.position = "absolute";
+  //   noLabel.style.left = x + "px";
+  //   noLabel.style.top = y + "px";
+  // }
 
   function survey() {
     const selected = document.querySelector('input[name="friend"]:checked'); // radio button
