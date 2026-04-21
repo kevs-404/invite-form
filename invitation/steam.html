@@ -14,7 +14,7 @@
     <style>
       body {
         font-family: "Arial", sans-serif;
-        background: url("../assets/test6.jpg") no-repeat center center fixed;
+        background: url("../assets/test13.jpg") no-repeat center center fixed;
         background-size: cover; 
         display: flex;
         justify-content: center;
@@ -222,6 +222,16 @@
           display: flex;
         }
       }
+
+      .light-text {
+        color: white;
+      }
+
+      .light-text .form-container p,
+      .light-text .form-group label,
+      .light-text .nav-links a {
+        color: white;
+      }
     </style>
   </head>
   <body>
@@ -249,9 +259,10 @@
           <label for="game">Choose a game you want to play: *</label>
           <select id="game" name="game" required>
             <option value="" disabled selected>Select a game</option>
-            <option value="MEDIEVAL DYNASTY 😎🎮">Medieval Dynasty😎🎮</option>
-            <option value="SUPERMARKET TOGETHER 😎🎮">Supermarket Together 😎🎮</option>
-            <option value="V RISING 😎🎮">V RISING 😎🎮</option>
+            <option value="TRAVELLERS REST 😎🎮">TRAVELLERS REST 🍺🏨</option>
+            <option value="MEDIEVAL DYNASTY 😎🎮">Medieval Dynasty 🏰⚔️</option>
+            <option value="SUPERMARKET TOGETHER 😎🎮">Supermarket Together 🛒💰</option>
+            <option value="V RISING 😎🎮">V RISING 🧛‍♂️🩸</option>
           </select>
         </div>
 
@@ -319,12 +330,19 @@
       gameSelect.addEventListener("change", function () {
         if (this.value === "MEDIEVAL DYNASTY 😎🎮") {
           document.body.style.background = "url('../assets/test6.jpg') no-repeat center center fixed";
+          document.body.classList.remove("light-text");
         } 
         else if (this.value === "SUPERMARKET TOGETHER 😎🎮") {
           document.body.style.background = "url('../assets/test7.jpg') no-repeat center center fixed";
+          document.body.classList.add("light-text");
         }
        else if (this.value === "V RISING 😎🎮") {
           document.body.style.background = "url('../assets/test8.jpg') no-repeat center center fixed";
+          document.body.classList.add("light-text");
+        }
+        else if (this.value === "TRAVELLERS REST 😎🎮") {
+          document.body.style.background = "url('../assets/test11.jpg') no-repeat center center fixed";
+          document.body.classList.add("light-text");
         }
 
         document.body.style.backgroundSize = "cover";
