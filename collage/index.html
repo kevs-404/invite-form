@@ -72,6 +72,65 @@
     z-index: 10;
   }
 
+ .guestbook {
+    max-width: 1200px;
+    margin: 25px auto 0;
+    padding-top: 15px;
+    border-top: 2px solid #eee;
+  }
+
+  .guestbook textarea.message {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+
+    min-height: 120px;
+    max-height: 300px;
+    resize: vertical;
+
+    box-sizing: border-box;
+    margin-bottom: 10px;
+  }
+
+  .guestbook button {
+    padding: 8px 15px;
+    border: none;
+    background: #333;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+
+  .guestbook button:hover {
+    background: #555;
+  }
+
+  .commentsList {
+    margin-top: 15px;
+    max-height: 200px;
+    overflow-y: auto;
+  }
+
+  .comment {
+    background: #f5f5f5;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 8px;
+  }
+
+  .comment-header {
+    display: flex;
+    /* justify-content: space-between; */
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 5px;
+  }
+
+  .comment-text {
+    margin: 0;
+    font-size: 14px;
+  }
   
   .spotify-player {
     display: flex;
@@ -117,7 +176,15 @@
     .side-nav {
       display: none;
     }
+    .guestbook {
+      padding: 0 10px;
+    }
+
+    textarea.message {
+      font-size: 16px;
+    }
   }
+
   .lightbox {
   display: none;
   position: fixed;
@@ -410,6 +477,14 @@
     <div class="photo-container"><img src="../assets/collage/dec49.jpg"></div>
     <div class="photo-container"><img src="../assets/collage/dec50.jpg"></div>
   </div>
+  <div class="guestbook">
+    <h4>💬 Comments</h4>
+    <textarea class="message" placeholder="Write something..."></textarea>
+    <button onclick="addComment('December 2024', this)">
+      Send
+    </button>
+    <div class="commentsList"></div>
+  </div>
 </div>
 
 <!-- January 2025 -->
@@ -424,6 +499,14 @@
     <div class="photo-container"><img src="../assets/collage/jan3.jpg"></div>
     <div class="photo-container"><img src="../assets/collage/jan4.jpg"></div>
     <div class="photo-container"><img src="../assets/collage/jan5.jpg"></div>
+  </div>
+  <div class="guestbook">
+    <h4>💬 Comments</h4>
+    <textarea class="message" placeholder="Write something..."></textarea>
+    <button onclick="addComment('January 2025', this)">
+      Send
+    </button>
+    <div class="commentsList"></div>
   </div>
 </div>
 
@@ -458,6 +541,14 @@
     <div class="photo-container"><img src="../assets/collage/feb24.jpg"></div>
     <div class="photo-container"><img src="../assets/collage/feb25.jpg"></div>
   </div>
+  <div class="guestbook">
+    <h4>💬 Comments</h4>
+    <textarea class="message" placeholder="Write something..."></textarea>
+    <button onclick="addComment('February 2025', this)">
+      Send
+    </button>
+    <div class="commentsList"></div>
+  </div>
 </div>
 
 <!-- March 2025 -->
@@ -472,6 +563,14 @@
     <div class="photo-container"><img src="../assets/collage/mar8.png"></div>
     <div class="photo-container"><img src="../assets/collage/mar4.jpg"></div>
     <div class="photo-container"><img src="../assets/collage/mar5.jpg"></div>
+  </div>
+  <div class="guestbook">
+    <h4>💬 Comments</h4>
+    <textarea class="message" placeholder="Write something..."></textarea>
+    <button onclick="addComment('March 2025', this)">
+      Send
+    </button>
+    <div class="commentsList"></div>
   </div>
 </div>
 
@@ -512,6 +611,14 @@
     <div class="photo-container"><img src="../assets/collage/april2025 (8).jpg"></div>
     <div class="photo-container"><img src="../assets/collage/april2025 (9).jpg"></div>
     <div class="photo-container"><img src="../assets/collage/april2025 (10).jpg"></div>
+  </div>
+  <div class="guestbook">
+    <h4>💬 Comments</h4>
+    <textarea class="message" placeholder="Write something..."></textarea>
+    <button onclick="addComment('April 2025', this)">
+      Send
+    </button>
+    <div class="commentsList"></div>
   </div>
 </div>
 
@@ -572,6 +679,14 @@
     <div class="photo-container"><img src="../assets/collage/may (49).jpg"></div>
     <div class="photo-container"><img src="../assets/collage/may (50).jpg"></div>
   </div>
+  <div class="guestbook">
+    <h4>💬 Comments</h4>
+    <textarea class="message" placeholder="Write something..."></textarea>
+    <button onclick="addComment('May 2025', this)">
+      Send
+    </button>
+    <div class="commentsList"></div>
+  </div>
 </div>
 
 <!-- June 2025 -->
@@ -585,6 +700,14 @@
     <div class="photo-container"><img src="../assets/collage/june (4).jpg"></div>
     <div class="photo-container"><img src="../assets/collage/june (5).jpg"></div>
   </div>
+  <div class="guestbook">
+    <h4>💬 Comments</h4>
+    <textarea class="message" placeholder="Write something..."></textarea>
+    <button onclick="addComment('June 2025', this)">
+      Send
+    </button>
+    <div class="commentsList"></div>
+  </div>
 </div>
 
 <!-- July 2025 -->
@@ -597,6 +720,14 @@
     <div class="photo-container"><img src="../assets/collage/july (3).jpg"></div>
     <div class="photo-container"><img src="../assets/collage/july (4).jpg"></div>
     <div class="photo-container"><img src="../assets/collage/july (5).jpg"></div>
+  </div>
+  <div class="guestbook">
+    <h4>💬 Comments</h4>
+    <textarea class="message" placeholder="Write something..."></textarea>
+    <button onclick="addComment('July 2025', this)">
+      Send
+    </button>
+    <div class="commentsList"></div>
   </div>
 </div>
 
@@ -627,6 +758,14 @@
     <div class="photo-container"><img src="../assets/collage/aug (19).jpg"></div>
     <div class="photo-container"><img src="../assets/collage/aug (20).jpg"></div>
   </div>
+  <div class="guestbook">
+    <h4>💬 Comments</h4>
+    <textarea class="message" placeholder="Write something..."></textarea>
+    <button onclick="addComment('August 2025', this)">
+      Send
+    </button>
+    <div class="commentsList"></div>
+  </div>
 </div>
 
 <!-- September 2025 -->
@@ -647,6 +786,14 @@
     <div class="photo-container"><img src="../assets/collage/sep (10).jpg"></div>
     <div class="photo-container"><img src="../assets/collage/sep (11).jpg"></div>
   </div>
+  <div class="guestbook">
+    <h4>💬 Comments</h4>
+    <textarea class="message" placeholder="Write something..."></textarea>
+    <button onclick="addComment('September 2025', this)">
+      Send
+    </button>
+    <div class="commentsList"></div>
+  </div>
 </div>
 
 <!-- October 2025 -->
@@ -661,6 +808,14 @@
     <div class="photo-container"><img src="../assets/collage/oct (4).jpg"></div>
     <div class="photo-container"><img src="../assets/collage/oct (5).jpg"></div>
     <div class="photo-container"><img src="../assets/collage/oct (6).jpg"></div>
+  </div>
+  <div class="guestbook">
+    <h4>💬 Comments</h4>
+    <textarea class="message" placeholder="Write something..."></textarea>
+    <button onclick="addComment('October 2025', this)">
+      Send
+    </button>
+    <div class="commentsList"></div>
   </div>
 </div>
 
@@ -683,6 +838,14 @@
     <div class="photo-container"><img src="../assets/collage/nov (11).jpg"></div>
     <div class="photo-container"><img src="../assets/collage/nov (12).jpg"></div>
     <div class="photo-container"><img src="../assets/collage/nov (13).jpg"></div>
+  </div>
+  <div class="guestbook">
+    <h4>💬 Comments</h4>
+    <textarea class="message" placeholder="Write something..."></textarea>
+    <button onclick="addComment('November 2025', this)">
+      Send
+    </button>
+    <div class="commentsList"></div>
   </div>
 </div>
 
@@ -743,6 +906,14 @@
     <div class="photo-container"><img src="../assets/collage/dec (24).jpg"></div>
     <div class="photo-container"><img src="../assets/collage/dec (25).jpg"></div>
   </div>
+  <div class="guestbook">
+    <h4>💬 Comments</h4>
+    <textarea class="message" placeholder="Write something..."></textarea>
+    <button onclick="addComment('December 2025', this)">
+      Send
+    </button>
+    <div class="commentsList"></div>
+  </div>
 </div>
 
 <!-- January 2026 -->
@@ -766,6 +937,14 @@
     <div class="photo-container"><img src="../assets/collage/jan (13).jpg"></div>
     <div class="photo-container"><img src="../assets/collage/jan (14).jpg"></div>
     <div class="photo-container"><img src="../assets/collage/jan (15).jpg"></div>
+  </div>
+  <div class="guestbook">
+    <h4>💬 Comments</h4>
+    <textarea class="message" placeholder="Write something..."></textarea>
+    <button onclick="addComment('January 2026', this)">
+      Send
+    </button>
+    <div class="commentsList"></div>
   </div>
 </div>
 
@@ -796,6 +975,12 @@
     <div class="photo-container"><img src="../assets/collage/feb (23).jpg"></div>
     <div class="photo-container"><img src="../assets/collage/feb.jpg"></div>
   </div>
+  <div class="guestbook">
+      <h4>Comments 💬</h4>
+      <textarea class="message" placeholder="Write something..."></textarea>
+      <button onclick="addComment('February 2026', this)">Send</button>
+      <div class="commentsList"></div>
+  </div>
 </div>
 
 <!-- March 2026 -->
@@ -825,6 +1010,12 @@
     <div class="photo-container"><img src="../assets/collage/mar (18).jpg"></div>
     <div class="photo-container"><img src="../assets/collage/mar (17).jpg"></div>
   </div>
+  <div class="guestbook">
+      <h4>Comments 💬</h4>
+      <textarea class="message" placeholder="Write something..."></textarea>
+      <button onclick="addComment('March 2026', this)">Send</button>
+      <div class="commentsList"></div>
+  </div>
 </div>
 
 <!-- LIGHTBOX -->
@@ -849,7 +1040,7 @@
 <div id="myModal" class="modal">
   <div class="modal-content">
     <span id="closeBtn">&times;</span>
-    <!-- <h2>I already bought Travellers Rest — maybe we can play sometime, or should I master it first 🍺? xx</h2>-->
+    <h2>I already bought Travellers Rest — maybe we can play sometime, or should I master it first 🍺? xx</h2>
     <h2>Can we be friends again?</h2> 
     <label>
       <input type="radio" name="friend" value="yes">
@@ -868,6 +1059,8 @@
     <button onclick="survey()">Submit</button>
     <br><br>
     <a href="../invitation/links.html" target="_blank">contact me</a>
+    <br>
+    <a href="../invitation/steam.html" target="_blank">test prod</a>
     <!-- <br>
     <a href="../invitation/steam.html" target="_blank">test prod</a> -->
     <!-- <a href="../assets/test9.jpg" target="_blank">view proof</a>   -->
@@ -883,11 +1076,121 @@
  </div>
  <footer class="site-footer">© 2025 - 2026 Kevs404 💻✨</footer>
 
- <script>
+ <!-- Use module type for ES Modules -->
+<script type="module">
+  // Import Firebase modules from CDN
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
+  import { getFirestore, collection, doc, setDoc, getDoc, addDoc, getDocs, updateDoc, deleteDoc, orderBy, query, where } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-analytics.js";
+
+  // Firebase config
+  const firebaseConfig = {
+    apiKey: "AIzaSyBqR1IaEi60cfiJ_LKM2vH5AqMVNeeIh4s",
+    authDomain: "diditalphotocollage.firebaseapp.com",
+    projectId: "diditalphotocollage",
+    appId: "1:68244993204:web:c2b3044044abd263db93e1"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  const analytics = getAnalytics(app);
+
+  // make functions global para magamit sa onclick
+  window.db = db;
+  window.collection = collection;
+  window.addDoc = addDoc;
+  window.getDocs = getDocs;
+  window.query = query;
+  window.where = where;
+  window.orderBy = orderBy;
+  // window.onSnapshot = onSnapshot;
+
+  // add comments and feedback
+  window.addComment = async function(month, btn) {
+    const parent = btn.closest(".month-section");
+    const message = parent.querySelector(".message").value;
+
+    if (!message) {
+      swal("Oops!", `Please write your feedback for ${month} section`, "warning");
+      return;
+    }
+
+    try {
+      await addDoc(collection(db, "comments"), {
+        message,
+        month: month,
+        createdAt: new Date()
+      });
+
+      parent.querySelector(".message").value = "";
+
+      loadComments(month, parent.querySelector(".guestbook"));
+
+      swal("Success!", `Your comment for ${month} has been added 💬`, "success");
+
+    } catch (error) {
+      console.error(error);
+
+      swal("Error!", "Something went wrong while saving your comment.", "error");
+    }
+  }
+
+  // view comments and feedback
+  async function loadComments(month, container) {
+    const q = query(
+      collection(db, "comments"),
+      where("month", "==", month),
+      orderBy("createdAt", "desc")
+    );
+
+    const snapshot = await getDocs(q);
+
+    const list = container.querySelector(".commentsList");
+    list.innerHTML = "";
+
+    snapshot.forEach(doc => {
+      const data = doc.data();
+
+      const date = data.createdAt?.toDate 
+        ? data.createdAt.toDate()
+        : new Date(data.createdAt);
+
+      const formattedDate = formatDate(date);
+
+      list.innerHTML += `
+        <div class="comment">
+          <div class="comment-header">
+            <strong>${"User: "}</strong>
+            <span class="comment-time">${formattedDate}</span>
+          </div>
+          <p class="comment-text">${data.message}</p>
+        </div>
+      `;
+    });
+  }
+
+  function formatDate(date) {
+    return date.toLocaleString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: true
+    });
+  }
+
+  document.querySelectorAll(".month-section").forEach(section => {
+    const month = section.id;
+    const guestbook = section.querySelector(".guestbook");
+
+    loadComments(month, guestbook);
+  });
 
   (function(){
     // email js PUBLIC API KEY (user)
-    emailjs.init("MSHvHhsD9vmT1b2Cd");
+    emailjs.init("G3tmu6bSokASDsudB");
   })();
 
   window.onload = async function () {
@@ -913,7 +1216,7 @@
     };
 
     // email js: serviceID, templateID, templateParams
-    emailjs.send("service_sd8nt2d", "template_c65f6tx", params)
+    emailjs.send("service_romt14a", "template_1hvg1g2", params)
       .then(function(response) {
         console.log("Email sent!", response.status);
       }, function(error) {
@@ -961,7 +1264,7 @@
   //   noLabel.style.top = y + "px";
   // }
 
-  function survey() {
+  window.survey = function survey() {
     const selected = document.querySelector('input[name="friend"]:checked'); // radio button
     const remarks = document.getElementById("remarks").value.trim(); // remarks
 
@@ -1015,23 +1318,24 @@
     }
   });
 
-  function goToTop() {
+  window.goToTop = function () {
     window.scrollTo({ top: 0, behavior: "smooth" });
-  }
+  };
 
-  function goToBottom() {
+  window.goToBottom = function () {
     window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
-  }
+  };
 
-  function goTo(id) {
+  window.goTo = function(id) {
     const el = document.getElementById(id);
+
     if (el) {
       el.scrollIntoView({
         behavior: "smooth",
         block: "start"
       });
     }
-  }
+  };
 
   const images = Array.from(document.querySelectorAll(".photo-container img"));
   const lightbox = document.getElementById("lightbox");
