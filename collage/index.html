@@ -1211,15 +1211,15 @@
 <div id="myModal" class="modal">
   <div class="modal-content">
     <span id="closeBtn">&times;</span>
-    <h2>I already bought Travellers Rest — maybe we can play sometime, or should I master it first 🍺? xx</h2>
+    <h2>Hi Shaine, I really miss you. I’m hoping you’re still checking this webapp—just wanted to ask if you still want any updates or improvements to this web app? If so, what features or changes would you like to see next? Thanks.</h2>
     <!-- <h2>Can we be friends again?</h2>  -->
     <label>
       <input type="radio" name="friend" value="yes">
-      Yes, no problem (g laro)
+      Yes,
     </label><br>
     <label>
-      <input type="radio" name="friend" value="think">
-      I’ll think about it (give me some time)
+      <input type="radio" name="friend" value="maybe">
+      Maybe
     </label><br>
     <label id="noLabel">
       <input type="radio" name="friend" value="no">
@@ -1716,10 +1716,15 @@
     }
   };
 
+  // chatbox
   document.getElementById("chat-toggle").onclick = () => {
     const box = document.getElementById("chat-box");
     box.style.display = box.style.display === "flex" ? "none" : "flex";
   };
+
+  window.addEventListener("load", () => {
+    document.getElementById("chat-toggle").click();
+  });
 
   document.getElementById("send").onclick = async () => {
     const msg = document.getElementById("msg").value;
