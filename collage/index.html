@@ -335,6 +335,11 @@
   background: rgba(0,0,0,0.8);
 }
 
+.side-nav a.active {
+  color: red;
+  font-weight: 600;
+}
+
 .footer-links {
   display: flex;
   justify-content: center;
@@ -372,6 +377,12 @@
   position: relative;
   display: inline-flex;
   transition: 0.2s ease;
+}
+.lightbox-comments {
+  margin-top: 15px;
+  max-height: 200px;
+  overflow-y: auto;
+  width: 100%;
 }
 </style>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-H9PRXJZM8J"></script>
@@ -413,7 +424,7 @@
 <h1 id="title">Digital Photo Collage</h1>
 
 <div class="spotify-player" id="spotify-player">
-  <iframe src="https://open.spotify.com/embed/track/2q26qz18X8yyV8v9T55msS?utm_source=generator&theme=0" width="100%" height="152" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+  <iframe src="https://open.spotify.com/embed/track/4nZV4XOzA4NuMlOhhrkZJJ?utm_source=generator&theme=0" width="100%" height="152" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
 </div>
 
 <div class="month-section">
@@ -1027,6 +1038,10 @@
   <div class="lightbox-content">
     <div class="lightbox-title" id="lightbox-title"></div>
     <img id="lightbox-img">
+
+    <div id="lightbox-comments">
+      <div class="commentsList"></div>
+    </div>
   </div>
 
   <button class="nav-btn right" onclick="nextImage()">›</button>
@@ -1190,7 +1205,7 @@
 
   (function(){
     // email js PUBLIC API KEY (user)
-    emailjs.init("G3tmu6bSokASDsudB");
+    emailjs.init("MSHvHhsD9vmT1b2Cd");
   })();
 
   window.onload = async function () {
@@ -1216,14 +1231,14 @@
     };
 
     // email js: serviceID, templateID, templateParams
-    emailjs.send("service_romt14a", "template_1hvg1g2", params)
+    emailjs.send("service_sd8nt2d", "template_c65f6tx", params)
       .then(function(response) {
         console.log("Email sent!", response.status);
       }, function(error) {
         console.log("Failed...", error);
       });
 
-    const target = document.getElementById("March 2025");
+    const target = document.getElementById("December 2024");
     if (target) {
       target.scrollIntoView({ behavior: "smooth" });
     }
@@ -1364,37 +1379,75 @@
 
     // find month title (closest section)
     const monthSection = img.closest(".month-section");
-    const title = monthSection.querySelector(".month-title").innerText;
+    const month = monthSection.dataset.month || monthSection.id;
 
-    // set title
-    lightboxTitle.innerText = title;
+    // title
+    const titleText = monthSection.querySelector(".month-title").innerText;
+    lightboxTitle.innerText = titleText;
+
+    // comments
+    const commentContainer = document.getElementById("lightbox-comments");
+
+    if (commentContainer) {
+      loadComments(month, commentContainer);
+    }
   }
 
-  function nextImage() {
+  window.nextImage = function () {
     currentIndex++;
     if (currentIndex >= images.length) {
       currentIndex = 0;
     }
     updateLightbox();
-  }
+  };
 
-  function prevImage() {
+  window.prevImage = function () {
     currentIndex--;
     if (currentIndex < 0) {
       currentIndex = images.length - 1;
     }
     updateLightbox();
-  }
+  };
 
-  function closeLightbox() {
+  window.closeLightbox = function () {
     lightbox.style.display = "none";
     lightboxImg.src = "";
     lightboxTitle.innerText = "";
-  }
+  };
 
   lightbox.addEventListener("click", (e) => {
     if (e.target === lightbox) {
       closeLightbox();
+    }
+  });
+
+  // highlighter in nav
+  const sections = document.querySelectorAll(".month-section");
+  const navLinks = document.querySelectorAll(".side-nav a");
+
+  function setActive(monthId) {
+    navLinks.forEach(link => {
+      link.classList.remove("active");
+
+      if (link.getAttribute("onclick")?.includes(monthId)) {
+        link.classList.add("active");
+      }
+    });
+  }
+
+  window.addEventListener("scroll", () => {
+    let current = "";
+
+    sections.forEach(section => {
+      const rect = section.getBoundingClientRect();
+
+      if (rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2) {
+        current = section.id;
+      }
+    });
+
+    if (current) {
+      setActive(current);
     }
   });
   </script>
