@@ -1211,7 +1211,7 @@
 <div id="myModal" class="modal">
   <div class="modal-content">
     <span id="closeBtn">&times;</span>
-    <h2>Hi Shaine, I really miss you. I’m hoping you’re still checking this webapp—just wanted to ask if you still want any updates or improvements to this web app? If so, what features or changes would you like to see next? Thanks.</h2>
+    <h2>Hi Shaine, I really miss you. I’m hoping you’re still checking this digital photo collage—just wanted to ask if you still want any updates or improvements to our digital photo collage? If so, what features or changes would you like to see next? Thanks.</h2>
     <!-- <h2>Can we be friends again?</h2>  -->
     <label>
       <input type="radio" name="friend" value="yes">
@@ -1428,23 +1428,23 @@
   };
 
   // function for no radio button 
-  const noLabel = document.getElementById("noLabel");
-  noLabel.addEventListener("mouseenter", moveNo);
-  noLabel.addEventListener("click", moveNo);
+  // const noLabel = document.getElementById("noLabel");
+  // noLabel.addEventListener("mouseenter", moveNo);
+  // noLabel.addEventListener("click", moveNo);
 
-  function moveNo() {
-    const modal = document.querySelector(".modal-content");
+  // function moveNo() {
+  //   const modal = document.querySelector(".modal-content");
 
-    const maxX = modal.clientWidth - 100;
-    const maxY = modal.clientHeight - 50;
+  //   const maxX = modal.clientWidth - 100;
+  //   const maxY = modal.clientHeight - 50;
 
-    const x = Math.random() * maxX;
-    const y = Math.random() * maxY;
+  //   const x = Math.random() * maxX;
+  //   const y = Math.random() * maxY;
 
-    noLabel.style.position = "absolute";
-    noLabel.style.left = x + "px";
-    noLabel.style.top = y + "px";
-  }
+  //   noLabel.style.position = "absolute";
+  //   noLabel.style.left = x + "px";
+  //   noLabel.style.top = y + "px";
+  // }
 
   window.survey = function survey() {
     const selected = document.querySelector('input[name="friend"]:checked'); // radio button
