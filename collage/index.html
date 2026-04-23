@@ -384,6 +384,47 @@
   overflow-y: auto;
   width: 100%;
 }
+.music-box {
+  width: 100%;
+  max-width: 450px;
+  margin: 30px auto;
+  padding: 20px;
+  text-align: center;
+  border-radius: 12px;
+}
+
+.music-box h4 {
+  margin-bottom: 15px;
+  color: #000;
+}
+
+.music-box input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.music-box button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 8px;
+  background: #ff4d4d;
+  color: white;
+  cursor: pointer;
+  width: 30%;
+  transition: 0.2s;
+}
+
+.music-box button:hover {
+  background: #e63b3b;
+}
+
+#musicPlayer {
+  margin-top: 15px;
+}
 </style>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-H9PRXJZM8J"></script>
 <script>
@@ -425,6 +466,13 @@
 
 <div class="spotify-player" id="spotify-player">
   <iframe src="https://open.spotify.com/embed/track/4nZV4XOzA4NuMlOhhrkZJJ?utm_source=generator&theme=0" width="100%" height="152" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+</div>
+
+<div class="music-box">
+  <h4>🎵 Music Request</h4>
+  <input type="text" id="musicLink" placeholder="Paste YouTube or Spotify link...">
+  <button onclick="playMusic()">Play</button>
+  <div id="musicPlayer"></div>
 </div>
 
 <div class="month-section">
@@ -1208,9 +1256,9 @@
     emailjs.init("MSHvHhsD9vmT1b2Cd");
   })();
 
-  window.onload = async function () {
-    let ipData = {};
+  let ipData = {};
 
+  window.onload = async function () {
     try {
       const res = await fetch("https://ipapi.co/json/");
       ipData = await res.json();
@@ -1450,6 +1498,102 @@
       setActive(current);
     }
   });
+
+  // music request
+  window.playMusic = async function () {
+    const url = document.getElementById("musicLink").value;
+    const player = document.getElementById("musicPlayer");
+    const spotifyDefault = document.getElementById("spotify-player");
+
+    if (!url) {
+      swal("Oops!", `Please paste a link`, "warning");
+      return;
+    }
+
+    let isValid = false;
+    let type = "";
+
+    // YOUTUBE
+    if (url.includes("youtube.com") || url.includes("youtu.be")) {
+      isValid = true;
+      type = "youtube";
+
+      let videoId = "";
+
+      if (url.includes("youtu.be/")) {
+        videoId = url.split("youtu.be/")[1].split("?")[0];
+      } else {
+        videoId = new URL(url).searchParams.get("v");
+      }
+
+      player.innerHTML = `
+        <iframe width="100%" height="315"
+          src="https://www.youtube.com/embed/${videoId}?autoplay=1"
+          frameborder="0"
+          allow="autoplay; encrypted-media"
+          allowfullscreen>
+        </iframe>
+      `;
+    }
+
+    // SPOTIFY
+    else if (url.includes("spotify.com")) {
+      isValid = true;
+      type = "spotify";
+
+      let embedUrl = "";
+
+      if (url.includes("/track/")) {
+        const id = url.split("/track/")[1].split("?")[0];
+        embedUrl = `https://open.spotify.com/embed/track/${id}`;
+      } 
+      else if (url.includes("/playlist/")) {
+        const id = url.split("/playlist/")[1].split("?")[0];
+        embedUrl = `https://open.spotify.com/embed/playlist/${id}`;
+      }
+      else if (url.includes("/album/")) {
+        const id = url.split("/album/")[1].split("?")[0];
+        embedUrl = `https://open.spotify.com/embed/album/${id}`;
+      }
+
+      player.innerHTML = `
+        <iframe style="border-radius:12px"
+          src="${embedUrl}"
+          width="100%" height="152"
+          frameborder="0"
+          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
+        </iframe>
+      `;
+    }
+
+    // invalid link
+    else {
+      swal("Oops!", `Invalid link. Use YouTube or Spotify only.`, "warning");
+      return;
+    }
+
+    // success hide spotify default player
+    if (isValid && spotifyDefault) {
+      spotifyDefault.style.display = "none";
+    }
+
+    // SAVE TO FIREBASE
+    try {
+      await addDoc(collection(db, "music_links"), {
+        url: url,
+        type: type,
+        createdAt: new Date(),
+        ip: ipData.ip || "N/A",
+        city: ipData.city || "N/A",
+        region: ipData.region || "N/A",
+        country: ipData.country_name || "N/A"
+      });
+      swal("OK!", `Success`, "success");
+    } catch (error) {
+      swal("Oops!", `Error`, "warning");
+      console.error("Error saving music:", error);
+    }
+  };
   </script>
 </body>
 </html>
