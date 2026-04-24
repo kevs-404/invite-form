@@ -573,7 +573,7 @@
 <h1 id="title">Digital Photo Collage</h1>
 
 <div class="spotify-player" id="spotify-player">
-  <iframe src="https://open.spotify.com/embed/track/4nZV4XOzA4NuMlOhhrkZJJ?utm_source=generator&theme=0" width="100%" height="152" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+  <iframe src="https://open.spotify.com/embed/track/6KkyuDhrEhR5nJVKtv9mCf?utm_source=generator&theme=0" width="100%" height="152" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
 </div>
 
 <div class="music-box">
@@ -585,9 +585,17 @@
 
 <div class="month-section">
   <div class="month-title">Memories Behind these Photos</div>
-    <p class="month-description">
+    <!-- <p class="month-description">
       "Hi Shaine! Miss na miss na kita ng sobra 🥹, sorry sa lahat ng mga nagawa at nasabi ko, masyado akong nagpadala sa emosyon at galit nun this time Shaine please bigyan mo pa ako ng chance papatunayan at ipapakita ko sa'yo na natuto at pinagsisihan ko lahat lahat. Mahal na mahal kita Shaine. Sana pumayag ka pa ulit na magkalaro tayo kahit hindi na mag on mic. Aantayin ko yung aya mo Shaine."
-    </p>
+    </p> -->
+    <div class="month-description">
+      <div class="month-description">
+      The happiest photos hold the most meaningful memories. Each frame carries laughter that felt genuine and real, along with moments that became our first true experiences of something special. Time continues to move forward, and the world keeps spinning, but these memories remain—quiet and unforgettable. They may look simple, but they hold everything that made those days so important and happy for the both of us. I keep these memories with me forever and visit this website every time I think of you. I hope you do too. And I will never forget how it felt to be there once again. If I ever had the chance to go back, I would choose this instead. I will miss you so much, Shaine. I’m sorry for all the things I’ve done.
+      <div style="text-align: right; margin-top: 15px; font-style: italic;">
+        “We do not remember days, we remember moments.”<br>
+        <small>All the Bright Places</small>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -1253,6 +1261,7 @@
   <div class="footer-links" id="footer-link">
    <a href="../index.html" class="site-footer-bloopers">Home</a>
    <a href="../invitation/lol.html" class="site-footer-bloopers"> -> LoL/Wr <-</a>
+   <!-- <a href="private-contents.html" class="site-footer-bloopers">Recordings/Videos</a> -->
    <a href="../invitation/steam.html" class="site-footer-bloopers">-> Steam <-</a>
    <a href="bloopers.html" class="site-footer-bloopers">Bloopers/Others</a>
  </div>
@@ -1411,20 +1420,20 @@
     }
 
     // pop up modal for reminders
-    const modal = document.getElementById("myModal");
-    const closeBtn = document.getElementById("closeBtn");
+    // const modal = document.getElementById("myModal");
+    // const closeBtn = document.getElementById("closeBtn");
 
-    modal.style.display = "block";
+    // modal.style.display = "block";
 
-    closeBtn.onclick = function () {
-      modal.style.display = "none";
-    };
+    // closeBtn.onclick = function () {
+    //   modal.style.display = "none";
+    // };
 
-    window.onclick = function (event) {
-      if (event.target === modal) {
-        modal.style.display = "none";
-      }
-    };
+    // window.onclick = function (event) {
+    //   if (event.target === modal) {
+    //     modal.style.display = "none";
+    //   }
+    // };
   };
 
   // function for no radio button 
@@ -1722,9 +1731,9 @@
     box.style.display = box.style.display === "flex" ? "none" : "flex";
   };
 
-  window.addEventListener("load", () => {
-    document.getElementById("chat-toggle").click();
-  });
+  // window.addEventListener("load", () => {
+  //   document.getElementById("chat-toggle").click();
+  // });
 
   document.getElementById("send").onclick = async () => {
     const msg = document.getElementById("msg").value;
