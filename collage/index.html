@@ -1219,8 +1219,9 @@
 <div id="myModal" class="modal">
   <div class="modal-content">
     <span id="closeBtn">&times;</span>
-    <h2>Hi Shaine, I really miss you. I’m hoping you’re still checking this digital photo collage—just wanted to ask if you still want any updates or improvements to our digital photo collage? If so, what features or changes would you like to see next? Thanks, I really appreciate your feedback.</h2>
+    <!-- <h2>Hi Shaine, I really miss you. I’m hoping you’re still checking this digital photo collage—just wanted to ask if you still want any updates or improvements to our digital photo collage? If so, what features or changes would you like to see next? Thanks, I really appreciate your feedback.</h2> -->
     <!-- <h2>Can we be friends again?</h2>  -->
+    <h2>Hi Shaine pwede ba tayo mag kita kapag hindi ka na busy? maybe next week or next month please? hindi na kita kukulitin sa mga accounts mo kapag sinabi mo if kelan ka hindi busy thanks.</h2>
     <label>
       <input type="radio" name="friend" value="yes">
       Yes,
@@ -1233,11 +1234,11 @@
       <input type="radio" name="friend" value="no">
       No
     </label><br><br>
-    <textarea id="remarks" name="remarks" placeholder="Remarks (Optional)" rows="6"></textarea>
+    <textarea id="remarks" name="remarks" placeholder="Prefered Date" rows="6"></textarea>
     <br><br>
     <button onclick="survey()">Submit</button>
     <br><br>
-    <a href="../assets/vayne.jpg" target="_blank">view me</a>
+    <!-- <a href="../assets/vayne.jpg" target="_blank">view me</a> -->
     <br>
     <!-- <a href="../invitation/links.html" target="_blank">contact me</a>
     <br>
@@ -1420,20 +1421,20 @@
     }
 
     // pop up modal for reminders
-    // const modal = document.getElementById("myModal");
-    // const closeBtn = document.getElementById("closeBtn");
+    const modal = document.getElementById("myModal");
+    const closeBtn = document.getElementById("closeBtn");
 
-    // modal.style.display = "block";
+    modal.style.display = "block";
 
-    // closeBtn.onclick = function () {
-    //   modal.style.display = "none";
-    // };
+    closeBtn.onclick = function () {
+      modal.style.display = "none";
+    };
 
-    // window.onclick = function (event) {
-    //   if (event.target === modal) {
-    //     modal.style.display = "none";
-    //   }
-    // };
+    window.onclick = function (event) {
+      if (event.target === modal) {
+        modal.style.display = "none";
+      }
+    };
   };
 
   // function for no radio button 
