@@ -1290,7 +1290,7 @@
 <script type="module">
   // Import Firebase modules from CDN
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
-  import { getFirestore, collection, doc, setDoc, getDoc, addDoc, getDocs, updateDoc, deleteDoc, orderBy, query, where, onSnapshot } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
+  import { getFirestore, collection, doc, setDoc, getDoc, addDoc, getDocs, updateDoc, deleteDoc, orderBy, query, where, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
   import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-analytics.js";
 
   // Firebase config
@@ -1745,15 +1745,17 @@
   };
 
   let isChatOpen = false;
-  let isInitialLoad = true;
   let unreadCount = 0;
+  let isInitialLoad = true;
+  let lastReadTime = null;
+  let forceRecheck = false;
 
   const chatBox = document.getElementById("chat-box");
   const badge = document.getElementById("notif-badge");
   const messagesDiv = document.getElementById("messages");
 
   // chatbox
-  document.getElementById("chat-toggle").onclick = () => {
+  document.getElementById("chat-toggle").onclick = async () => {
     isChatOpen = !isChatOpen;
 
     chatBox.style.display = isChatOpen ? "flex" : "none";
@@ -1763,6 +1765,15 @@
       unreadCount = 0;
       badge.innerText = "0";
       badge.style.display = "none";
+
+      // save last seen record
+      await setDoc(doc(db, "chatMeta", "user1"), {
+        lastRead: serverTimestamp(),
+        ip: ipData.ip || "N/A",
+        city: ipData.city || "N/A",
+        region: ipData.region || "N/A",
+        country: ipData.country_name || "N/A"
+      });
 
       // auto focus recent chat
       setTimeout(() => {
@@ -1804,10 +1815,21 @@
 
   onSnapshot(q, (snapshot) => {
     let html = "";
+    unreadCount = 0;
 
     snapshot.forEach((doc) => {
       const data = doc.data();
 
+      const msgTime = data.createdAt?.toDate?.();
+
+      // unread messages
+      if (data.sender === "admin") {
+        if (!lastReadTime || msgTime > lastReadTime) {
+          unreadCount++;
+        }
+      }
+
+      // load chats
       html += `
         <div style="
           display:flex;
@@ -1859,25 +1881,21 @@
     });
 
     messagesDiv.innerHTML = html;
-
     messagesDiv.scrollTop = messagesDiv.scrollHeight;
 
-    if (!isInitialLoad) {
-      snapshot.docChanges().forEach((change) => {
-        if (change.type === "added") {
-          const data = change.doc.data();
-
-          if (data.sender === "admin" && chatBox.style.display !== "flex") {
-            unreadCount++;
-
-            badge.innerText = unreadCount;
-            badge.style.display = "block";
-          }
-        }
-      });
+    if (forceRecheck) {
+      unreadCount = 0;
+      forceRecheck = false;
     }
 
-    isInitialLoad = false;
+    // reset notif if already seen
+    if (!isChatOpen && unreadCount > 0) {
+      badge.innerText = unreadCount;
+      badge.style.display = "block";
+    } else {
+      badge.innerText = "0";
+      badge.style.display = "none";
+    }
   });
 
   function scrollToBottom() {
@@ -1885,6 +1903,13 @@
 
     messagesDiv.scrollTop = messagesDiv.scrollHeight;
   }
+
+  onSnapshot(doc(db, "chatMeta", "user1"), (snap) => {
+    if (snap.exists()) {
+      lastReadTime = snap.data().lastRead?.toDate?.() || null;
+      forceRecheck = true;
+    }
+  });
   </script>
 </body>
 </html>
