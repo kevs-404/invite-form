@@ -1858,8 +1858,21 @@
             padding:8px 12px;
             border-radius:12px;
             max-width:70%;
+            display:flex;
+            flex-direction:column;
           ">
-            ${data.text}
+            <div>
+              ${data.text}
+            </div>
+
+            <div style="
+              font-size:10px;
+              opacity:0.6;
+              margin-top:4px;
+              text-align:right;
+            ">
+              ${formatChatDate(data.createdAt)}
+            </div>
           </div>
 
           ${data.sender === 'user' ? `
@@ -1910,6 +1923,20 @@
       forceRecheck = true;
     }
   });
+
+  function formatChatDate(timestamp) {
+    const date = timestamp?.toDate?.();
+    if (!date) return "";
+
+    return date.toLocaleString("en-US", {
+      month: "short",
+      day: "2-digit",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: true
+    });
+  }
   </script>
 </body>
 </html>
