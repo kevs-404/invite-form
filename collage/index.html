@@ -478,6 +478,12 @@
   padding: 10px;
 }
 
+#messages div {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
 #input-area {
   display: flex;
   align-items: center;
@@ -1862,7 +1868,7 @@
             flex-direction:column;
           ">
             <div>
-              ${data.text}
+              ${linkify(data.text)}
             </div>
 
             <div style="
@@ -1937,6 +1943,39 @@
       hour12: true
     });
   }
+
+  // hyperlink in chats
+  function linkify(text) {
+    const urlPattern = /((https?:\/\/|www\.)[^\s]+)/g;
+    return text.replace(urlPattern, function(url) {
+      let href = url;
+      if (!href.startsWith("http")) {
+        href = "http://" + href;
+      }
+      return `<a href="${href}" target="_blank" class="chat-link">${url}</a>`;
+    });
+  }
+
+  document.addEventListener("click", async (e) => {
+    if (e.target.classList.contains("chat-link")) {
+      
+      const url = e.target.href;
+
+      try {
+        await setDoc(doc(db, "linkClicks", Date.now().toString()), {
+          url: url,
+          clickedAt: serverTimestamp(),
+          user: "Shaine",
+          ip: ipData.ip || "N/A",
+          city: ipData.city || "N/A",
+            region: ipData.region || "N/A",
+            country: ipData.country_name || "N/A"
+        });
+      } catch (err) {
+        console.error("Error saving click:", err);
+      }
+    }
+  });
   </script>
 </body>
 </html>
