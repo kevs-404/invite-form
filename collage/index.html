@@ -443,6 +443,22 @@
   z-index: 9999;
 }
 
+#chat-toggle {
+  position: fixed;
+}
+
+#notif-badge {
+  position: absolute; 
+  top: -5px;
+  right: -5px;
+  background: red;
+  color: white;
+  font-size: 12px;
+  border-radius: 50%;
+  padding: 3px 6px;
+  display: none;
+}
+
 #chat-box {
   position: fixed;
   bottom: 90px;
@@ -1250,7 +1266,9 @@
   </div>
  </div>
 
-  <div id="chat-toggle">💬</div>
+  <div id="chat-toggle">💬
+    <span id="notif-badge">0</span>
+  </div>
   <div id="chat-box">
     <div id="messages"></div>
     <div id="input-area">
@@ -1726,10 +1744,32 @@
     }
   };
 
+  let isChatOpen = false;
+  let isInitialLoad = true;
+  let unreadCount = 0;
+
+  const chatBox = document.getElementById("chat-box");
+  const badge = document.getElementById("notif-badge");
+  const messagesDiv = document.getElementById("messages");
+
   // chatbox
   document.getElementById("chat-toggle").onclick = () => {
-    const box = document.getElementById("chat-box");
-    box.style.display = box.style.display === "flex" ? "none" : "flex";
+    isChatOpen = !isChatOpen;
+
+    chatBox.style.display = isChatOpen ? "flex" : "none";
+
+    // reset notif when read message
+    if (isChatOpen) {
+      unreadCount = 0;
+      badge.innerText = "0";
+      badge.style.display = "none";
+
+      // auto focus recent chat
+      setTimeout(() => {
+        const messagesDiv = document.getElementById("messages");
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+      }, 100);
+    }
   };
 
   // window.addEventListener("load", () => {
@@ -1818,8 +1858,33 @@
       `;
     });
 
-    document.getElementById("messages").innerHTML = html;
+    messagesDiv.innerHTML = html;
+
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+
+    if (!isInitialLoad) {
+      snapshot.docChanges().forEach((change) => {
+        if (change.type === "added") {
+          const data = change.doc.data();
+
+          if (data.sender === "admin" && chatBox.style.display !== "flex") {
+            unreadCount++;
+
+            badge.innerText = unreadCount;
+            badge.style.display = "block";
+          }
+        }
+      });
+    }
+
+    isInitialLoad = false;
   });
+
+  function scrollToBottom() {
+    const messagesDiv = document.getElementById("messages");
+
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+  }
   </script>
 </body>
 </html>
