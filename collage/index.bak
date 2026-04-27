@@ -1,0 +1,1450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="shortcut icon" href="../assets/programmerist.png" type="image/x-icon"/>
+<title>Photo Collage</title>
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 20px;
+  }
+
+  h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+  }
+
+  .month-section {
+    margin-top: 50px;
+    margin-bottom: 50px;
+  }
+
+  .month-title {
+    font-size: 1.5em;
+    margin-bottom: 15px;
+    color: #444;
+    border-bottom: 2px solid #ccc;
+    padding-bottom: 5px;
+  }
+
+  .month-description {
+    max-width: 1200px;
+    margin: 0 auto 20px auto; /* center + spacing below */
+    color: #555;
+    line-height: 1.6;
+    font-size: 1em;
+  }
+
+  .collage {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: 15px;
+  }
+
+  .photo-container {
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+
+  .photo-container img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s;
+  }
+
+  .photo-container:hover {
+    transform: scale(1.05) rotate(2deg);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+    z-index: 10;
+  }
+
+ .guestbook {
+    max-width: 1200px;
+    margin: 25px auto 0;
+    padding-top: 15px;
+    border-top: 2px solid #eee;
+  }
+
+  .guestbook textarea.message {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+
+    min-height: 120px;
+    max-height: 300px;
+    resize: vertical;
+
+    box-sizing: border-box;
+    margin-bottom: 10px;
+  }
+
+  .guestbook button {
+    padding: 8px 15px;
+    border: none;
+    background: #333;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+
+  .guestbook button:hover {
+    background: #555;
+  }
+
+  .commentsList {
+    margin-top: 15px;
+    max-height: 200px;
+    overflow-y: auto;
+  }
+
+  .comment {
+    background: #f5f5f5;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 8px;
+  }
+
+  .comment-header {
+    display: flex;
+    /* justify-content: space-between; */
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 5px;
+  }
+
+  .comment-text {
+    margin: 0;
+    font-size: 14px;
+  }
+  
+  .spotify-player {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    width: 100%;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .spotify-player iframe {
+    width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  }
+
+  .site-footer {
+    font-size: 12px;
+    color: black;
+    text-align: center;
+    margin-top: 20px;
+    padding: 15px 0;
+    position: static; /* default */
+    width: 100%;
+  }
+
+  .site-footer-bloopers {
+    font-size: 12px;
+    color: black;
+    text-align: center;
+    margin-top: 0px;
+    padding: 15px 0;
+    position: static; /* default */
+    width: 100%;
+  }
+
+  @media (max-width: 480px) {
+    .photo-container img {
+      height: 350px;
+      object-fit: cover;
+    }
+    .side-nav {
+      display: none;
+    }
+    .guestbook {
+      padding: 0 10px;
+    }
+
+    textarea.message {
+      font-size: 16px;
+    }
+  }
+
+  .lightbox {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(15, 15, 15, 0.92);
+  justify-content: center;
+  align-items: center;
+}
+
+.lightbox-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 90%;
+  max-height: 90%;
+}
+
+.lightbox-title {
+  color: #fff;
+  font-size: 18px;
+  margin-bottom: 12px;
+  text-align: center;
+  font-weight: 600;
+  max-width: 100%;
+}
+
+.lightbox img {
+  max-width: 85vw;
+  max-height: 75vh; 
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+}
+
+.lightbox .close {
+  position: absolute;
+  top: 15px;
+  right: 25px;
+  font-size: 40px;
+  color: white;
+  cursor: pointer;
+}
+
+#goTopBtn, #goDownBtn {
+  position: fixed;
+  right: 15px;
+  z-index: 99999;
+
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: none;
+
+  background: #444;
+  color: white;
+  font-size: 18px;
+
+  cursor: pointer;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.25);
+
+  -webkit-tap-highlight-color: transparent;
+  display: none;
+}
+
+#goTopBtn {
+  bottom: 55px;
+  right: 5px;
+}
+
+#goDownBtn {
+  bottom: 5px;
+  right: 5px;
+}
+
+#goTopBtn:hover,
+#goDownBtn:hover {
+  background: #222;
+  transform: scale(1.08);
+}
+
+.side-nav {
+  position: fixed;
+  right: 5px;
+  top: 5px;
+  width: 35px;
+  background: rgba(255,255,255,0.9);
+  padding: 5px;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+  z-index: 9999;
+  font-size: 14px;
+}
+
+.side-nav .nav-title {
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.side-nav .nav-year {
+  margin-top: 5px;
+  font-weight: bold;
+  color: #666;
+}
+
+.side-nav a {
+  display: block;
+  padding: 5px;
+  cursor: pointer;
+  color: #333;
+  text-decoration: none;
+  border-radius: 6px;
+}
+
+.side-nav a:hover {
+  background: #eee;
+}
+
+.nav-btn {
+  position: absolute;
+  top: 55%;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.5);
+  color: white;
+  border: none;
+  font-size: 30px;
+  padding: 10px 15px;
+  cursor: pointer;
+  border-radius: 8px;
+  z-index: 10000;
+}
+
+.nav-btn.left {
+  left: 20px;
+}
+
+.nav-btn.right {
+  right: 20px;
+}
+
+.nav-btn:hover {
+  background: rgba(0,0,0,0.8);
+}
+
+.side-nav a.active {
+  color: red;
+  font-weight: 600;
+}
+
+.footer-links {
+  display: flex;
+  justify-content: center;
+  gap: 5px; 
+  padding: 10px 0;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+}
+
+.modal-content {
+  background: white;
+  margin: 10% auto;
+  padding: 20px;
+  width: 300px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+#closeBtn {
+  float: right;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+#noLabel {
+  position: relative;
+  display: inline-flex;
+  transition: 0.2s ease;
+}
+.lightbox-comments {
+  margin-top: 15px;
+  max-height: 200px;
+  overflow-y: auto;
+  width: 100%;
+}
+.music-box {
+  width: 100%;
+  max-width: 450px;
+  margin: 30px auto;
+  padding: 20px;
+  text-align: center;
+  border-radius: 12px;
+}
+
+.music-box h4 {
+  margin-bottom: 15px;
+  color: #000;
+}
+
+.music-box input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.music-box button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 8px;
+  background: #ff4d4d;
+  color: white;
+  cursor: pointer;
+  width: 30%;
+  transition: 0.2s;
+}
+
+.music-box button:hover {
+  background: #e63b3b;
+}
+
+#musicPlayer {
+  margin-top: 15px;
+}
+
+#chat-toggle {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  background: #111;
+  color: white;
+  border-radius: 50%;
+  width: 55px;
+  height: 55px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 24px;
+  z-index: 9999;
+}
+
+#chat-header {
+  background: #111;
+  color: white;
+  padding: 10px;
+  font-weight: bold;
+  text-align: center;
+}
+
+#chat-toggle {
+  position: fixed;
+}
+
+#notif-badge {
+  position: absolute; 
+  top: -5px;
+  right: -5px;
+  background: red;
+  color: white;
+  font-size: 12px;
+  border-radius: 50%;
+  padding: 3px 6px;
+  display: none;
+}
+
+#chat-box {
+  position: fixed;
+  bottom: 90px;
+  left: 20px;
+  width: 300px;
+  height: 500px;
+  background: white;
+  border: 1px solid #ccc;
+  display: none;
+  flex-direction: column;
+  z-index: 9999;
+}
+
+#messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px;
+}
+
+#messages div {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+#input-area {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  border-top: 1px solid #ddd;
+  background: #fff;
+}
+
+#input-area input {
+  flex: 1;
+}
+
+#msg {
+  flex: 1;
+  resize: none;
+  border: none;
+  outline: none;
+  padding: 10px 12px;
+  border-radius: 20px;
+  background: #f1f1f1;
+  font-size: 14px;
+  max-height: 80px;
+  overflow-y: auto;
+}
+
+
+/* USER = RIGHT SIDE */
+.msg.user {
+  justify-content: flex-end;
+}
+
+/* ADMIN = LEFT SIDE */
+.msg.admin {
+  justify-content: flex-start;
+}
+
+.bubble {
+  padding: 8px 12px;
+  border-radius: 12px;
+  max-width: 70%;
+  font-size: 14px;
+}
+
+/* USER STYLE */
+.msg.user .bubble {
+  background: #4caf50;
+  color: white;
+}
+
+/* ADMIN STYLE */
+.msg.admin .bubble {
+  background: #e0e0e0;
+  color: black;
+}
+
+#send {
+  margin-left: 8px;
+  border: none;
+  background: #35109b;
+  color: white;
+  width: 40px;
+  height: 40px;
+  /* border-radius: 50%; */
+  cursor: pointer;
+  font-size: 16px;
+}
+
+#send:hover {
+  background: #43a047;
+}
+
+.photo-container video {
+  width: 100%;
+  height: 400px;
+  object-fit: contain;
+  display: block;
+  border-radius: 10px;
+}
+
+</style>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-H9PRXJZM8J"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-H9PRXJZM8J');
+</script>
+</head>
+<body>
+
+<h1 id="title">Games/Dev Archived</h1>
+
+<div class="music-box">
+  <h4>🎵 Music Request</h4>
+  <input type="text" id="musicLink" placeholder="Paste YouTube or Spotify link...">
+  <button onclick="playMusic()">Play</button>
+  <div id="musicPlayer"></div>
+</div>
+
+<!-- LOL Contents -->
+<div class="month-section" id="LOL Contents">
+  <div class="month-title">LOL Contents</div>
+  <div class="collage">
+    <div class="photo-container"><img src="../assets/contents/1.png"></div>
+    <div class="photo-container"><img src="../assets/contents/6.png"></div>
+    <div class="photo-container"><img src="../assets/contents/3.png"></div>
+    <div class="photo-container"><img src="../assets/contents/4.png"></div>
+    <div class="photo-container"><img src="../assets/contents/5.png"></div>
+  </div>
+  <div class="guestbook">
+    <h4>💬 Comments</h4>
+    <textarea class="message" placeholder="Write something..."></textarea>
+    <button onclick="addComment('LOL Contents', this)">
+      Send
+    </button>
+    <div class="commentsList"></div>
+  </div>
+</div>
+
+<!-- Steam Contents -->
+<div class="month-section" id="Steam Contents">
+  <div class="month-title">Steam Contents</div>
+  <div class="collage">
+    <div class="photo-container"><img src="../assets/contents/1.png"></div>
+    <div class="photo-container"><img src="../assets/contents/6.png"></div>
+    <div class="photo-container"><img src="../assets/contents/3.png"></div>
+    <div class="photo-container"><img src="../assets/contents/4.png"></div>
+    <div class="photo-container"><img src="../assets/contents/5.png"></div>
+  </div>
+  <div class="guestbook">
+    <h4>💬 Comments</h4>
+    <textarea class="message" placeholder="Write something..."></textarea>
+    <button onclick="addComment('Steam Contents', this)">
+      Send
+    </button>
+    <div class="commentsList"></div>
+  </div>
+</div>
+
+<!-- Dev Contents -->
+<div class="month-section" id="Steam Contents">
+  <div class="month-title">Dev Contents</div>
+  <div class="collage">
+    <div class="photo-container"><img src="../assets/contents/kev1 (1).JPG"></div>
+    <div class="photo-container"><img src="../assets/contents/kev1 (1).JPG"></div>
+    <div class="photo-container"><img src="../assets/contents/kev1 (1).JPG"></div>
+    <div class="photo-container"><img src="../assets/contents/kev1 (1).JPG"></div>
+    <div class="photo-container"><img src="../assets/contents/kev1 (1).JPG"></div>
+  </div>
+  <div class="guestbook">
+    <h4>💬 Comments</h4>
+    <textarea class="message" placeholder="Write something..."></textarea>
+    <button onclick="addComment('Steam Contents', this)">
+      Send
+    </button>
+    <div class="commentsList"></div>
+  </div>
+</div>
+
+<!-- FL Studio Contents -->
+<!-- <div class="month-section" id="FLStudio Contents">
+  <div class="month-title">Beats</div>
+  <div class="collage">
+    <div class="photo-container"><img src="../assets/contents/kev1 (1).JPG"></div>
+    <div class="photo-container"><img src="../assets/contents/kev1 (1).JPG"></div>
+    <div class="photo-container"><img src="../assets/contents/kev1 (1).JPG"></div>
+    <div class="photo-container"><img src="../assets/contents/kev1 (1).JPG"></div>
+    <div class="photo-container"><img src="../assets/contents/kev1 (1).JPG"></div>
+  </div>
+  <div class="guestbook">
+    <h4>💬 Comments</h4>
+    <textarea class="message" placeholder="Write something..."></textarea>
+    <button onclick="addComment('FLStudio Contents', this)">
+      Send
+    </button>
+    <div class="commentsList"></div>
+  </div>
+</div> -->
+
+<!-- Videos -->
+<div class="month-section" id="Videos">
+  <div class="month-title">Dev Highlights</div>
+  <div class="collage">
+    <!-- VIDEO 1 -->
+    <div class="photo-container">
+      <video controls title="Test Panorama">
+        <source src="../assets/contents/mario.mp4" type="video/mp4">
+      </video>
+    </div>
+  </div>
+  <div class="guestbook">
+    <h4>💬 Comments</h4>
+    <textarea class="message" placeholder="Write something..."></textarea>
+    <button onclick="addComment('Videos', this)">
+      Send
+    </button>
+    <div class="commentsList"></div>
+  </div>
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <span class="close" onclick="closeLightbox()">×</span>
+
+  <button class="nav-btn left" onclick="prevImage()">‹</button>
+
+  <div class="lightbox-content">
+    <div class="lightbox-title" id="lightbox-title"></div>
+    <img id="lightbox-img">
+
+    <div id="lightbox-comments">
+      <div class="commentsList"></div>
+    </div>
+  </div>
+
+  <button class="nav-btn right" onclick="nextImage()">›</button>
+</div>
+
+<!-- Up button -->
+<button id="goTopBtn" onclick="goToTop()">↑</button>
+<!-- Down button -->
+<button id="goDownBtn" onclick="goToBottom()">↓</button>
+
+<div id="myModal" class="modal">
+ </div>
+
+  <div id="chat-toggle">💬
+    <span id="notif-badge">0</span>
+  </div>
+  <div id="chat-box">
+    <div id="chat-header">
+      <span id="chat-name">Admin</span>
+    </div>
+    <div id="messages"></div>
+    <div id="input-area">
+      <input id="msg" placeholder="Type message..." />
+      <button id="send">➤</button>
+    </div>
+  </div>
+
+  <div class="footer-links" id="footer-link">
+   <a href="../index.html" class="site-footer-bloopers">Home</a>
+   <a href="../invitation/lol.html" class="site-footer-bloopers"> -> LoL/Wr <-</a>
+   <!-- <a href="private-contents.html" class="site-footer-bloopers">Recordings/Videos</a> -->
+   <a href="../invitation/steam.html" class="site-footer-bloopers">-> Steam <-</a>
+   <a href="bloopers.html" class="site-footer-bloopers">Bloopers/Others</a>
+ </div>
+ <footer class="site-footer">© 2025 - 2026 Kevs404 💻✨</footer>
+
+ <!-- Use module type for ES Modules -->
+<script type="module">
+  // Import Firebase modules from CDN
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
+  import { getFirestore, collection, doc, setDoc, getDoc, addDoc, getDocs, updateDoc, deleteDoc, orderBy, query, where, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-analytics.js";
+
+  // Firebase config
+  const firebaseConfig = {
+    apiKey: "AIzaSyBqR1IaEi60cfiJ_LKM2vH5AqMVNeeIh4s",
+    authDomain: "diditalphotocollage.firebaseapp.com",
+    projectId: "diditalphotocollage",
+    appId: "1:68244993204:web:c2b3044044abd263db93e1"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  const analytics = getAnalytics(app);
+
+  // make functions global para magamit sa onclick
+  window.db = db;
+  window.collection = collection;
+  window.addDoc = addDoc;
+  window.getDocs = getDocs;
+  window.query = query;
+  window.where = where;
+  window.orderBy = orderBy;
+  window.onSnapshot = onSnapshot;
+
+  // add comments and feedback
+  window.addComment = async function(month, btn) {
+    const parent = btn.closest(".month-section");
+    const message = parent.querySelector(".message").value;
+
+    if (!message) {
+      swal("Oops!", `Please write your feedback for ${month} section`, "warning");
+      return;
+    }
+
+    try {
+      await addDoc(collection(db, "comments"), {
+        message,
+        month: month,
+        createdAt: new Date()
+      });
+
+      parent.querySelector(".message").value = "";
+
+      loadComments(month, parent.querySelector(".guestbook"));
+
+      swal("Success!", `Your comment for ${month} has been added 💬`, "success");
+
+    } catch (error) {
+      console.error(error);
+
+      swal("Error!", "Something went wrong while saving your comment.", "error");
+    }
+  }
+
+  // view comments and feedback
+  async function loadComments(month, container) {
+    const q = query(
+      collection(db, "comments"),
+      where("month", "==", month),
+      orderBy("createdAt", "desc")
+    );
+
+    const snapshot = await getDocs(q);
+
+    const list = container.querySelector(".commentsList");
+    list.innerHTML = "";
+
+    snapshot.forEach(doc => {
+      const data = doc.data();
+
+      const date = data.createdAt?.toDate 
+        ? data.createdAt.toDate()
+        : new Date(data.createdAt);
+
+      const formattedDate = formatDate(date);
+
+      list.innerHTML += `
+        <div class="comment">
+          <div class="comment-header">
+            <strong>${"User: "}</strong>
+            <span class="comment-time">${formattedDate}</span>
+          </div>
+          <p class="comment-text">${data.message}</p>
+        </div>
+      `;
+    });
+  }
+
+  function formatDate(date) {
+    return date.toLocaleString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: true
+    });
+  }
+
+  document.querySelectorAll(".month-section").forEach(section => {
+    const month = section.id;
+    const guestbook = section.querySelector(".guestbook");
+
+    loadComments(month, guestbook);
+  });
+
+  (function(){
+    // email js PUBLIC API KEY (user)
+    emailjs.init("MSHvHhsD9vmT1b2Cd");
+  })();
+
+  let ipData = {};
+
+  window.onload = async function () {
+    try {
+      const res = await fetch("https://ipapi.co/json/");
+      ipData = await res.json();
+    } catch (err) {
+      console.log("IP fetch failed:", err);
+    }
+
+    const params = {
+      page: window.location.href,
+      userAgent: navigator.userAgent,
+      time: new Date().toLocaleString(),
+      cookies: document.cookie,
+
+      ip: ipData.ip || "N/A",
+      city: ipData.city || "N/A",
+      region: ipData.region || "N/A",
+      country: ipData.country_name || "N/A"
+    };
+
+    // email js: serviceID, templateID, templateParams
+    emailjs.send("service_sd8nt2d", "template_c65f6tx", params)
+      .then(function(response) {
+        console.log("Email sent!", response.status);
+      }, function(error) {
+        console.log("Failed...", error);
+      });
+
+    const target = document.getElementById("spotify-player");
+    if (target) {
+      target.scrollIntoView({ behavior: "smooth" });
+    }
+
+    // pop up modal for reminders
+    // const modal = document.getElementById("myModal");
+    // const closeBtn = document.getElementById("closeBtn");
+
+    // modal.style.display = "block";
+
+    // closeBtn.onclick = function () {
+    //   modal.style.display = "none";
+    // };
+
+    // window.onclick = function (event) {
+    //   if (event.target === modal) {
+    //     modal.style.display = "none";
+    //   }
+    // };
+  };
+
+  // popup specific prefered image based on data id
+  document.addEventListener("DOMContentLoaded", function () {
+    const images = document.querySelectorAll('.photo-container');
+
+    let targetIndex = -1;
+
+    images.forEach((el, i) => {
+      if (el.getAttribute("data-id") === "memories") {
+        targetIndex = i;
+      }
+    });
+
+    if (targetIndex !== -1) {
+      openLightbox(targetIndex);
+    }
+  });
+
+  // function for no radio button 
+  // const noLabel = document.getElementById("noLabel");
+  // noLabel.addEventListener("mouseenter", moveNo);
+  // noLabel.addEventListener("click", moveNo);
+
+  // function moveNo() {
+  //   const modal = document.querySelector(".modal-content");
+
+  //   const maxX = modal.clientWidth - 100;
+  //   const maxY = modal.clientHeight - 50;
+
+  //   const x = Math.random() * maxX;
+  //   const y = Math.random() * maxY;
+
+  //   noLabel.style.position = "absolute";
+  //   noLabel.style.left = x + "px";
+  //   noLabel.style.top = y + "px";
+  // }
+
+  window.survey = function survey() {
+    const selected = document.querySelector('input[name="friend"]:checked'); // radio button
+    const remarks = document.getElementById("remarks").value.trim(); // remarks
+
+    // if (!selected) {
+    //   swal("Oops!", "Please select an option at least.", "warning");
+    //   return;
+    // }
+
+    if (remarks.length > 100) {
+      swal("Oops!", "Remarks must be 100 characters only.", "warning");
+      return;
+    }
+
+    // const labelText = selected.parentElement.innerText.trim();
+    const labelText = selected ? selected.parentElement.innerText.trim() : "No response";
+
+    const params = {
+      title: 'Survey Form',
+      choice: labelText, 
+      remarks: remarks ? remarks : "No remarks",
+      page: window.location.href,
+      time: new Date().toLocaleString()
+    };
+
+    // // email js: serviceID, templateID, templateParams
+    emailjs.send("service_sd8nt2d", "template_cif7d4a", params)
+    .then(() => {
+      swal("Success!", "Your response has been successfully sent.", "success");
+      // clear radio button
+      document.querySelectorAll('input[name="friend"]').forEach(radio => {
+        radio.checked = false;
+      });
+      // clear remarks
+      document.querySelector('#remarks').value = "";
+      // close modal
+      document.getElementById("myModal").style.display = "none";
+    })
+    .catch((err) => {
+      console.log(err);
+      swal("Error!", "Failed to send response. Try again.", "error");
+    });
+  }
+
+  const goTopBtn = document.getElementById("goTopBtn");
+  const goDownBtn = document.getElementById("goDownBtn");
+
+  window.addEventListener("scroll", () => {
+    if (window.scrollY > 300) {
+      goTopBtn.style.display = "block";
+      goDownBtn.style.display = "block";
+    } else {
+      goTopBtn.style.display = "none";
+      goDownBtn.style.display = "none";
+    }
+  });
+
+  window.goToTop = function () {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  window.goToBottom = function () {
+    window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+  };
+
+  window.goTo = function(id) {
+    const el = document.getElementById(id);
+
+    if (el) {
+      el.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+    }
+  };
+
+  const images = Array.from(document.querySelectorAll(".photo-container img"));
+  const lightbox = document.getElementById("lightbox");
+  const lightboxImg = document.getElementById("lightbox-img");
+  const lightboxTitle = document.getElementById("lightbox-title");
+
+  let currentIndex = 0;
+
+  images.forEach((img, index) => {
+    img.addEventListener("click", () => {
+      openLightbox(index);
+    });
+  });
+
+  function openLightbox(index) {
+    currentIndex = index;
+    lightbox.style.display = "flex";
+    updateLightbox();
+  }
+
+  function updateLightbox() {
+    const img = images[currentIndex];
+
+    // show image
+    lightboxImg.src = img.src;
+
+    // find month title (closest section)
+    const monthSection = img.closest(".month-section");
+    const month = monthSection.dataset.month || monthSection.id;
+
+    // title
+    const titleText = monthSection.querySelector(".month-title").innerText;
+    lightboxTitle.innerHTML = monthSection.querySelector(".month-title").innerHTML;
+    // lightboxTitle.innerText = titleText;
+
+    // comments
+    const commentContainer = document.getElementById("lightbox-comments");
+
+    if (commentContainer) {
+      loadComments(month, commentContainer);
+    }
+  }
+
+  window.nextImage = function () {
+    currentIndex++;
+    if (currentIndex >= images.length) {
+      currentIndex = 0;
+    }
+    updateLightbox();
+  };
+
+  window.prevImage = function () {
+    currentIndex--;
+    if (currentIndex < 0) {
+      currentIndex = images.length - 1;
+    }
+    updateLightbox();
+  };
+
+  window.closeLightbox = function () {
+    lightbox.style.display = "none";
+    lightboxImg.src = "";
+    lightboxTitle.innerText = "";
+  };
+
+  lightbox.addEventListener("click", (e) => {
+    if (e.target === lightbox) {
+      closeLightbox();
+    }
+  });
+
+  // highlighter in nav
+  const sections = document.querySelectorAll(".month-section");
+  const navLinks = document.querySelectorAll(".side-nav a");
+
+  function setActive(monthId) {
+    navLinks.forEach(link => {
+      link.classList.remove("active");
+
+      if (link.getAttribute("onclick")?.includes(monthId)) {
+        link.classList.add("active");
+      }
+    });
+  }
+
+  window.addEventListener("scroll", () => {
+    let current = "";
+
+    sections.forEach(section => {
+      const rect = section.getBoundingClientRect();
+
+      if (rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2) {
+        current = section.id;
+      }
+    });
+
+    if (current) {
+      setActive(current);
+    }
+  });
+
+  // music request
+  window.playMusic = async function () {
+    const url = document.getElementById("musicLink").value;
+    const player = document.getElementById("musicPlayer");
+    const spotifyDefault = document.getElementById("spotify-player");
+
+    if (!url) {
+      swal("Oops!", `Please paste a link`, "warning");
+      return;
+    }
+
+    let isValid = false;
+    let type = "";
+
+    // YOUTUBE
+    if (url.includes("youtube.com") || url.includes("youtu.be")) {
+      isValid = true;
+      type = "youtube";
+
+      let videoId = "";
+
+      if (url.includes("youtu.be/")) {
+        videoId = url.split("youtu.be/")[1].split("?")[0];
+      } else {
+        videoId = new URL(url).searchParams.get("v");
+      }
+
+      player.innerHTML = `
+        <iframe width="100%" height="315"
+          src="https://www.youtube.com/embed/${videoId}?autoplay=1"
+          frameborder="0"
+          allow="autoplay; encrypted-media"
+          allowfullscreen>
+        </iframe>
+      `;
+    }
+
+    // SPOTIFY
+    else if (url.includes("spotify.com")) {
+      isValid = true;
+      type = "spotify";
+
+      let embedUrl = "";
+
+      if (url.includes("/track/")) {
+        const id = url.split("/track/")[1].split("?")[0];
+        embedUrl = `https://open.spotify.com/embed/track/${id}`;
+      } 
+      else if (url.includes("/playlist/")) {
+        const id = url.split("/playlist/")[1].split("?")[0];
+        embedUrl = `https://open.spotify.com/embed/playlist/${id}`;
+      }
+      else if (url.includes("/album/")) {
+        const id = url.split("/album/")[1].split("?")[0];
+        embedUrl = `https://open.spotify.com/embed/album/${id}`;
+      }
+
+      player.innerHTML = `
+        <iframe style="border-radius:12px"
+          src="${embedUrl}"
+          width="100%" height="152"
+          frameborder="0"
+          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
+        </iframe>
+      `;
+    }
+
+    // invalid link
+    else {
+      swal("Oops!", `Invalid link. Use YouTube or Spotify only.`, "warning");
+      return;
+    }
+
+    // success hide spotify default player
+    if (isValid && spotifyDefault) {
+      spotifyDefault.style.display = "none";
+    }
+
+    // SAVE TO FIREBASE
+    try {
+      await addDoc(collection(db, "music_links"), {
+        url: url,
+        type: type,
+        createdAt: new Date(),
+        ip: ipData.ip || "N/A",
+        city: ipData.city || "N/A",
+        region: ipData.region || "N/A",
+        country: ipData.country_name || "N/A"
+      });
+      swal("OK!", `Success`, "success");
+    } catch (error) {
+      swal("Oops!", `Error`, "warning");
+      console.error("Error saving music:", error);
+    }
+  };
+
+  let isChatOpen = false;
+  let unreadCount = 0;
+  let isInitialLoad = true;
+  let lastReadTime = null;
+  let forceRecheck = false;
+
+  const chatBox = document.getElementById("chat-box");
+  const badge = document.getElementById("notif-badge");
+  const messagesDiv = document.getElementById("messages");
+
+  // chatbox
+  document.getElementById("chat-toggle").onclick = async () => {
+    isChatOpen = !isChatOpen;
+
+    chatBox.style.display = isChatOpen ? "flex" : "none";
+
+    // reset notif when read message
+    if (isChatOpen) {
+      unreadCount = 0;
+      badge.innerText = "0";
+      badge.style.display = "none";
+
+      // save last seen record
+      await setDoc(doc(db, "chatMeta", "user1"), {
+        lastRead: serverTimestamp(),
+        ip: ipData.ip || "N/A",
+        city: ipData.city || "N/A",
+        region: ipData.region || "N/A",
+        country: ipData.country_name || "N/A"
+      });
+
+      // auto focus recent chat
+      setTimeout(() => {
+        const messagesDiv = document.getElementById("messages");
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+      }, 100);
+    }
+  };
+
+  // window.addEventListener("load", () => {
+  //   document.getElementById("chat-toggle").click();
+  // });
+
+  document.getElementById("send").onclick = async () => {
+    const msg = document.getElementById("msg").value;
+
+    if (!msg) return;
+
+    await addDoc(collection(db, "chat"), {
+      text: msg,
+      sender: "user",
+      name: "Shaine",
+      avatar: "👤",
+      createdAt: new Date()
+    });
+
+    document.getElementById("msg").value = "";
+  };
+
+  // send message upon enter
+  document.getElementById("msg").addEventListener("keypress", function(e) {
+    if (e.key === "Enter") {
+      e.preventDefault(); 
+      document.getElementById("send").click();
+    }
+  });
+
+  const q = query(collection(db, "chat"), orderBy("createdAt", "asc"));
+
+  onSnapshot(q, (snapshot) => {
+    let html = "";
+    unreadCount = 0;
+
+    snapshot.forEach((doc) => {
+      const data = doc.data();
+
+      const msgTime = data.createdAt?.toDate?.();
+
+      // unread messages
+      if (data.sender === "admin") {
+        if (!lastReadTime || msgTime > lastReadTime) {
+          unreadCount++;
+        }
+      }
+
+      // load chats
+      html += `
+        <div style="
+          display:flex;
+          justify-content:${data.sender === 'user' ? 'flex-end' : 'flex-start'};
+          margin:8px 0;
+        ">
+
+          ${data.sender === 'admin' ? `
+            <div style="
+              width:28px;
+              height:28px;
+              border-radius:50%;
+              background:#333;
+              color:#fff;
+              display:flex;
+              align-items:center;
+              justify-content:center;
+              font-size:12px;
+              margin-right:6px;
+            ">A</div>
+          ` : ""}
+
+          <div style="
+            background:${data.sender === 'user' ? '#4caf50' : '#eee'};
+            color:${data.sender === 'user' ? 'white' : 'black'};
+            padding:8px 12px;
+            border-radius:12px;
+            max-width:70%;
+            display:flex;
+            flex-direction:column;
+          ">
+            <div>
+              ${linkify(data.text)}
+            </div>
+
+            <div style="
+              font-size:10px;
+              opacity:0.6;
+              margin-top:4px;
+              text-align:right;
+            ">
+              ${formatChatDate(data.createdAt)}
+            </div>
+          </div>
+
+          ${data.sender === 'user' ? `
+            <div style="
+              width:28px;
+              height:28px;
+              border-radius:50%;
+              background:#999;
+              color:#fff;
+              display:flex;
+              align-items:center;
+              justify-content:center;
+              font-size:12px;
+              margin-left:6px;
+            ">S</div>
+          ` : ""}
+        </div>
+      `;
+    });
+
+    messagesDiv.innerHTML = html;
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+
+    if (forceRecheck) {
+      unreadCount = 0;
+      forceRecheck = false;
+    }
+
+    // reset notif if already seen
+    if (!isChatOpen && unreadCount > 0) {
+      badge.innerText = unreadCount;
+      badge.style.display = "block";
+    } else {
+      badge.innerText = "0";
+      badge.style.display = "none";
+    }
+  });
+
+  function scrollToBottom() {
+    const messagesDiv = document.getElementById("messages");
+
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+  }
+
+  onSnapshot(doc(db, "chatMeta", "user1"), (snap) => {
+    if (snap.exists()) {
+      lastReadTime = snap.data().lastRead?.toDate?.() || null;
+      forceRecheck = true;
+    }
+  });
+
+  function formatChatDate(timestamp) {
+    const date = timestamp?.toDate?.();
+    if (!date) return "";
+
+    return date.toLocaleString("en-US", {
+      month: "short",
+      day: "2-digit",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: true
+    });
+  }
+
+  // hyperlink in chats
+  function linkify(text) {
+    const urlPattern = /((https?:\/\/|www\.)[^\s]+)/g;
+    return text.replace(urlPattern, function(url) {
+      let href = url;
+      if (!href.startsWith("http")) {
+        href = "http://" + href;
+      }
+      return `<a href="${href}" target="_blank" class="chat-link">${url}</a>`;
+    });
+  }
+
+  document.addEventListener("click", async (e) => {
+    if (e.target.classList.contains("chat-link")) {
+      
+      const url = e.target.href;
+
+      try {
+        await setDoc(doc(db, "linkClicks", Date.now().toString()), {
+          url: url,
+          clickedAt: serverTimestamp(),
+          user: "Shaine",
+          ip: ipData.ip || "N/A",
+          city: ipData.city || "N/A",
+            region: ipData.region || "N/A",
+            country: ipData.country_name || "N/A"
+        });
+      } catch (err) {
+        console.error("Error saving click:", err);
+      }
+    }
+  });
+  </script>
+</body>
+</html>
