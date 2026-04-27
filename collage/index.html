@@ -1223,6 +1223,29 @@
   </div>
 </div>
 
+<!-- Memories-->
+<div class="month-section" id="Memories" style="display: none;">
+  <div class="month-title">
+    Your stories from a year ago<br>
+    Look back on these moments from your story archive.<br>
+    Powered by 
+    <a href="https://developers.facebook.com/docs/graph-api/" target="_blank">
+      Facebook Memories API
+    </a>
+  </div>
+  <!-- <p class="month-description">WIP
+  </p> -->
+  <div class="collage">
+    <div class="photo-container" data-id="memories"><img src="../assets/collage/memories.png"></div>
+  </div>
+  <div class="guestbook">
+      <h4>Comments 💬</h4>
+      <textarea class="message" placeholder="Write something..."></textarea>
+      <button onclick="addComment('March 2026', this)">Send</button>
+      <div class="commentsList"></div>
+  </div>
+</div>
+
 <!-- LIGHTBOX -->
 <div class="lightbox" id="lightbox">
   <span class="close" onclick="closeLightbox()">×</span>
@@ -1484,7 +1507,7 @@
     let targetIndex = -1;
 
     images.forEach((el, i) => {
-      if (el.getAttribute("data-id") === "dec42") {
+      if (el.getAttribute("data-id") === "memories") {
         targetIndex = i;
       }
     });
@@ -1620,7 +1643,8 @@
 
     // title
     const titleText = monthSection.querySelector(".month-title").innerText;
-    lightboxTitle.innerText = titleText;
+    lightboxTitle.innerHTML = monthSection.querySelector(".month-title").innerHTML;
+    // lightboxTitle.innerText = titleText;
 
     // comments
     const commentContainer = document.getElementById("lightbox-comments");
