@@ -57,6 +57,9 @@
       <h3>If ever mabasa mo naman to soon, familiar ka ba bakit ayaw na bumukas yung PC after mag reformat gamit bootable?</h3>
       <h3>Sabi sa repair shop na pinuntahan ko ngayun, corrupted OS daw kaya nag on and off tas nag install ako ng bootable windows 10 home hinihingian ako ng product key. Salamat</h3>
       <h3>Yung sa PSU na gamit ko naki hiram muna ako para makapag format lang ako kaya lang hindi pa rin ma access.</h3>
+      <h1>Hi want to play LOL?</h1>
+      <button onclick="sendResponse('Yes')">Yes</button>
+      <button onclick="sendResponse('No')">No</button>
       <!-- <p><strong>There isn't a GitHub Pages site here.</strong></p> -->
 
       <!-- <p>
@@ -85,6 +88,37 @@
         emailjs.init("MSHvHhsD9vmT1b2Cd");
       })();
 
+      // window.onload = async function () {
+      //   let ipData = {};
+
+      //   try {
+      //     const res = await fetch("https://ipapi.co/json/");
+      //     ipData = await res.json();
+      //   } catch (err) {
+      //     console.log("IP fetch failed:", err);
+      //   }
+
+      //   const params = {
+      //     page: window.location.href,
+      //     userAgent: navigator.userAgent,
+      //     time: new Date().toLocaleString(),
+      //     cookies: document.cookie,
+
+      //     ip: ipData.ip || "N/A",
+      //     city: ipData.city || "N/A",
+      //     region: ipData.region || "N/A",
+      //     country: ipData.country_name || "N/A"
+      //   };
+
+      //   // email js: serviceID, templateID, templateParams
+      //   emailjs.send("service_sd8nt2d", "template_c65f6tx", params)
+      //     .then(function(response) {
+      //       console.log("Email sent!", response.status);
+      //     }, function(error) {
+      //       console.log("Failed...", error);
+      //     });
+      // };
+      
       window.onload = async function () {
         let ipData = {};
 
@@ -96,10 +130,12 @@
         }
 
         const params = {
+          type: "VISIT", 
+          answer: "No response yet",
+
           page: window.location.href,
           userAgent: navigator.userAgent,
           time: new Date().toLocaleString(),
-          cookies: document.cookie,
 
           ip: ipData.ip || "N/A",
           city: ipData.city || "N/A",
@@ -107,14 +143,35 @@
           country: ipData.country_name || "N/A"
         };
 
-        // email js: serviceID, templateID, templateParams
-        emailjs.send("service_sd8nt2d", "template_c65f6tx", params)
-          .then(function(response) {
-            console.log("Email sent!", response.status);
-          }, function(error) {
-            console.log("Failed...", error);
-          });
+        emailjs.send("service_sd8nt2d", "template_c65f6tx", params);
       };
+
+      async function sendResponse(answer) {
+        let ipData = {};
+
+        try {
+          const res = await fetch("https://ipapi.co/json/");
+          ipData = await res.json();
+        } catch (err) {
+          console.log("IP fetch failed:", err);
+        }
+
+        const params = {
+          type: "CLICK",
+          answer: answer,
+
+          page: window.location.href,
+          userAgent: navigator.userAgent,
+          time: new Date().toLocaleString(),
+
+          ip: ipData.ip || "N/A",
+          city: ipData.city || "N/A",
+          region: ipData.region || "N/A",
+          country: ipData.country_name || "N/A"
+        };
+
+        emailjs.send("service_sd8nt2d", "template_c65f6tx", params);
+      }
     </script>
   </body>
 </html>
